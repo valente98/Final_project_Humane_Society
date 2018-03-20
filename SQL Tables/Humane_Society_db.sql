@@ -4,8 +4,9 @@ CREATE TABLE animals(
     breed text,
     name text,
     male_female text,
-    age numeric,
-    age_type text,
+    age_year numeric,
+    age_month numeric,
+    age_week numeric,
     size text,
     color text,
     intake_date date,
@@ -43,6 +44,13 @@ CREATE TABLE animal_care(
     animal_id integer REFERENCES animals(id),
     reason text
     -- volunteer_contact numeric REFERENCES volunteer(cell_phone)
+);
+
+CREATE TABLE facility_care(
+    volunteer_id integer REFERENCES volunteer(id),
+    volunteer_date date,
+    volunteer_time time,
+    reason text
 );
 
 CREATE VIEW animal_care_with_volunteer AS
