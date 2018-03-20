@@ -46,10 +46,27 @@ CREATE TABLE Animal_care(
 )
 
 CREATE TABLE Application(
+    apllicant_id Serial Primary key,
     first_name text,
     last_name text,
+    age numeric,
     email text,
     cell_phone text,
-    animal_adopting 
+    animal_adopting REFERENCE Animals(id),
     city text,
+    county text,
+    home_address text,
+    ownership_status text,
+    amount_pets_own numeric,
+    amount_pets_own_past numeric,
+    animal_living_with_you boolean,
+    inside_outside text,
+    kept_during_day text,
+    kept_at_night text,
+    surender_animals_at_us boolean,
+    adopted_from_us_before boolean,
+    shelter_description text,
+    Current_veterinarian_name text,
+    if_no_vet_name_vet_planing text,
+    saw_pet_first text
 )
