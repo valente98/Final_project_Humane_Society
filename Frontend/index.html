@@ -18,14 +18,11 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Humane Society</a>
+                <a class="navbar-brand" onclick="home()">Humane Society</a>
             </div>
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="#">Home</a>
-                </li>
-                <li>
-                    <a href="#">About Us</a>
+                    <a onclick="home()">Home</a>
                 </li>
                 <li>
                     <a href="#">Volunteer</a>
@@ -36,7 +33,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">
+                    <a onclick="manager_login()">
                         <span class="glyphicon glyphicon-log-in"></span> Manager Login</a>
                 </li>
             </ul>
@@ -55,30 +52,48 @@
                 <img id="animal" src="./images/dog.jpg" width="250" length="250" />
                 <br>
                 <br>
-                <button onclick="showanimals('dog')">Adopt a dog</button>
+                <button id="showDogs">Adopt a dog</button>
             </div>
             <div class="col-lg-4">
                 <img id="animal" src="./images/cats.jpeg" width="270" length="270" />
                 <br>
                 <br>
-                <button>Adopt a cat</button>
+                <button id="showCats">Adopt a cat</button>
             </div>
             <div class="col-lg-4">
                 <img id="animal" src="./images/otherpets.jpg" width="220" length="220" />
                 <br>
                 <br>
-                <button>Adopt other pets</button>
+                <button id="showOtherpets">Adopt other pets</button>
             </div>
         </div>
     </div>
-    <div id="adoption"></div>
-    <div id="about_us"></div>
-    <div id="application"></div>
-    <div id="volunteer"></div>
-    <div id="foster_care"></div>
-    <div id="facility_care"></div>
-    <div id="manager_id"></div>
-    <div id="manager_page"></div>
+    <div id="adoption" hidden="true"></div>
+    <div id="application" hidden="true"></div>
+    <div id="volunteer" hidden="true"></div>
+    <div id="foster_care" hidden="true"></div>
+    <div id="facility_care" hidden="true"></div>
+    <div id="manager_id" hidden="true">
+        <center>
+            <div id="container">
+                <div class="container">
+                    <img src="./images/logo.jpg" width="425" length="425" />
+                </div>
+                <h1>Humane Society Manager Loging</h1>
+                <div id="user-info">
+                    <input id="username-input" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                        placeholder="Username" class="">
+                    <p id="username-error"></p>
+                    <br>
+                    <input id="password-input" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                        placeholder="Password" class="">
+                    <p id="password-errors"></p>
+                    <a class="login-button">Login</a>
+                </div>
+            </div>
+        </center>
+    </div>
+    <div id="manager_page" hidden="true"></div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
