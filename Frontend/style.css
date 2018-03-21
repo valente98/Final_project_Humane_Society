@@ -9,6 +9,10 @@ hr {
 #animal {
     border-radius: 50%;
 }
+.fa-huge {
+    font-size: 5em;
+    color: #333;
+}
 
 button {
     background-color: #333; /* Green */
