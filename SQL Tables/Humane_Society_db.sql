@@ -16,6 +16,12 @@ CREATE TABLE animals(
     spayed_or_neutured boolean
 );
 
+INSERT INTO animals(species, breed, name, male_female, age_year, age_month, age_week,
+size, color, intake_date, location, houseTrained, declawed, spayed_or_neutured) VALUES(
+    'rabbit','sam', 'havana rabbit', 'male', 1, 4, 2, 'small', 'brown', '2017-01-12', 'rabbit cage',
+    'false', 'false', 'false'
+);
+
 CREATE TABLE manager(
     id Serial Primary key,
     first_name text,

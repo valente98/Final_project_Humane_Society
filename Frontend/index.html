@@ -39,7 +39,7 @@
             </ul>
         </div>
     </nav>
-    <div id="home">
+    <div id="home" hidden="true">
         <center>
             <div class="container">
                 <img src="./images/logo.jpg" width="425" length="425" />
@@ -52,19 +52,19 @@
                 <img id="animal" src="./images/dog.jpg" width="250" length="250" />
                 <br>
                 <br>
-                <button id="showDogs">Adopt a dog</button>
+                <button onclick="animal_by_species('dog')">Adopt a dog</button>
             </div>
             <div class="col-lg-4">
                 <img id="animal" src="./images/cats.jpeg" width="270" length="270" />
                 <br>
                 <br>
-                <button id="showCats">Adopt a cat</button>
+                <button onclick="animal_by_species('cat')">Adopt a cat</button>
             </div>
             <div class="col-lg-4">
                 <img id="animal" src="./images/otherpets.jpg" width="220" length="220" />
                 <br>
                 <br>
-                <button id="showOtherpets">Adopt other pets</button>
+                <button onclick="other_pets()">Adopt other pets</button>
             </div>
         </div>
         <br>
@@ -141,30 +141,59 @@
     <div id="volunteer" hidden="true"></div>
     <div id="foster_care" hidden="true"></div>
     <div id="facility_care" hidden="true"></div>
-    <div id="manager_id" hidden="true">
+    <div id="manager_id">
         <center>
             <div id="container">
                 <div class="container">
                     <img src="./images/logo.jpg" width="425" length="425" />
                 </div>
-                <h1>Humane Society Manager Loging</h1>
-                <div id="user-info">
-                    <input id="username-input" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                        placeholder="Username" class="">
-                    <p id="username-error"></p>
-                    <br>
-                    <input id="password-input" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                        placeholder="Password" class="">
-                    <p id="password-errors"></p>
-                    <a class="login-button">Login</a>
-                </div>
+                <h1>Humane Society Manager Login</h1>
+                <form id="user-info">
+                    <fieldset>
+                        <div class="form-group">
+                            <input id="username-input" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                                placeholder="Username" class="">
+                        </div>
+                        <div class="form-group">
+                            <input id="password-input" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                                placeholder="Password" class="">
+                        </div>
+                        <p id="login-error" class="text-danger"></p>
+                        <button class="login-button" type="submit">Login</button>
+                    </fieldset>
+                </form>
             </div>
         </center>
     </div>
-    <div id="manager_page" hidden="true"></div>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <div id="manager_page" hidden="true">
+        <center>
+            <div class="container">
+                <img src="./images/logo.jpg" width="425" length="425" />
+            </div>
+        </center>
+        <div class="container">
+            <h1>WELCOME</h1>
+            <hr>
+            <div class="col-lg-3">
+                <button onclick="insertAnimal()">ADD
+                    <br> ANIMAL</button>
+            </div>
+            <div class="col-lg-3">
+                <button>DELETE
+                    <br>ANIMAL
+                </button>
+            </div>
+            <div class="col-lg-3">
+                <button>VOLUNTEER APPLICANTS</button>
+            </div>
+            <div class="col-lg-3">
+                <button>ADOPTION APPLICANTS</button>
+            </div>
+        </div>
+    </div>
+    <div id="manager_choice" hidden="true"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="index.js"></script>
 </body>
