@@ -13,8 +13,12 @@ public class usercontroller {
     @CrossOrigin()
     @PostMapping("/showAnimals")
     public ArrayList pets(@RequestBody SpeciesCred animal) throws SQLException{
-        System.out.println(animal.animal);
         return animals.getanimalbyspecies(animal.animal);
 
 }
+    @CrossOrigin()
+    @PostMapping("/otherPets")
+    public ArrayList otherPets() throws SQLException{
+        return animals.getotherPets();
+    }
 }
