@@ -150,14 +150,22 @@ function other_pets() {
     $('#manager_id').attr('hidden', true);
     $('#adoption').attr('hidden', false);
     $.ajax({
-        url: 'http://localhost:8080/showAnimals',
+        url: 'http://localhost:8080/otherPets',
         type: 'POST',
         data: JSON.stringify({}),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json'
     })
         .then(function handleFeedResponse(response) {
-            home();
+            console.log(response);
+            var other_pet =
+                '<center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>OTHER PETS IN NEED OF ADOPTION:</h1><hr>' +
+                response
+                    .map(function(y) {
+                        return animals(y);
+                    })
+                    .join('');
+            $('#adoption').html(other_pet);
         })
         .catch(function handleErrorResponse(err) {
             console.log(err);
