@@ -25,9 +25,11 @@ CREATE TABLE manager(
     email text
 );
 
+INSERT INTO manager(first_name, last_name, username, password_hash, email) VALUES(
+    'Valente', 'Alvarez', 'valvarez12', '$2a$10$n8bYXVib6.SmjQPJRazwk.IGILPXEa1BoZN3z.XkSXxEgJbuZ5f2i', 'valvarez@basecampcodingacademy.org'
+);
 CREATE TABLE foster_care(
     id Serial Primary key,
-    user_id integer REFERENCES user_signup(id),
     first_name text,
     last_name text,
     email text,
@@ -38,12 +40,8 @@ CREATE TABLE foster_care(
     home_address text,
     days numeric,
     what_days text,
-    id Serial Primary key,
-    first_name text,
-    last_name text,
     username text,
-    password_hash text,
-    email text 
+    password_hash text
 );
 
 CREATE TABLE application(
