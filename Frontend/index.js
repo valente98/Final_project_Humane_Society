@@ -83,7 +83,64 @@ function manager_login() {
             });
     });
 }
+function animals(x) {
+    var html =
+        '<center><div class="col-lg-3"><p><img src="./images/animallogo.jpg" width="225" height="225"/></p>';
+    html += '<p>Name: ' + x.name + '</p>';
+    html += '<p>Breed: ' + x.breed + '</p>';
+    html += '<p>Gender: ' + x.male_female + '</p>';
+    html += '<p>Color: ' + x.color + '</p>';
+    html += '<p>Age: ' + x.age_year + ' year(s)<br>';
+    html += '   ' + x.age_month + ' month(s)<br>    ';
+    html += x.age_week + ' week(s)</p><button>View</button></div></center>';
+    return html;
+}
+function show_animals(animal) {
+    console.log(animal);
+    $('#home').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#volunteer').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
 
+    console.log(animal);
+    $.ajax({
+        url: 'http://localhost:8080/showAnimals',
+        type: 'POST',
+        data: JSON.stringify({
+            animal
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('#adoption').attr('hidden', false);
+            console.log(response);
+            if (animal === 'dog') {
+                var dog =
+                    '<center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>DOGS IN NEED OF ADOPTION:</h1><hr>' +
+                    response
+                        .map(function(y) {
+                            return animals(y);
+                        })
+                        .join('');
+                $('#adoption').html(dog);
+            } else if (animal === 'cat') {
+                var cat =
+                    '<center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>CATS IN NEED OF ADOPTION:</h1><hr>' +
+                    response
+                        .map(function(y) {
+                            return animals(y);
+                        })
+                        .join('');
+                $('#adoption').html(cat);
+            }
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
 function other_pets() {
     $('#home').attr('hidden', true);
     $('#application').attr('hidden', true);
@@ -91,16 +148,19 @@ function other_pets() {
     $('#foster_care').attr('hidden', true);
     $('#facility_care').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
-    $('#adoption').attr('hidden', true);
-    $.post('http://localhost:8080/otherPets', JSON.stringify({}))
+    $('#adoption').attr('hidden', false);
+    $.ajax({
+        url: 'http://localhost:8080/showAnimals',
+        type: 'POST',
+        data: JSON.stringify({}),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
         .then(function handleFeedResponse(response) {
             home();
         })
-        .catch(function handleFeedReason(reason) {
-            console.log('Failure:', reason);
-            $('#login-error').html(
-                '<li id="error" >Sorry incorrect username or password</li>'
-            );
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
         });
 }
 
@@ -166,6 +226,7 @@ function insertAnimal() {
             });
     });
 }
+
 function home() {
     $('#home').attr('hidden', false);
     $('#adoption').attr('hidden', true);
