@@ -83,6 +83,7 @@ function manager_login() {
             });
     });
 }
+
 function animals(x) {
     var html =
         '<center><div class="col-lg-3"><p><img src="./images/animallogo.jpg" width="225" height="225"/></p>';
@@ -95,6 +96,7 @@ function animals(x) {
     html += x.age_week + ' week(s)</p><button>View</button></div></center>';
     return html;
 }
+
 function show_animals(animal) {
     console.log(animal);
     $('#home').attr('hidden', true);
@@ -141,6 +143,21 @@ function show_animals(animal) {
             console.log(err);
         });
 }
+
+function other_animals(x) {
+    var html =
+        '<center><div class="col-lg-3"><p><img src="./images/animallogo.jpg" width="225" height="225"/></p>';
+    html += '<p>Name: ' + x.name + '</p>';
+    html += '<p>Species: ' + x.species + '</p>';
+    html += '<p>Breed: ' + x.breed + '</p>';
+    html += '<p>Gender: ' + x.male_female + '</p>';
+    html += '<p>Color: ' + x.color + '</p>';
+    html += '<p>Age: ' + x.age_year + ' year(s)<br>';
+    html += '   ' + x.age_month + ' month(s)<br>    ';
+    html += x.age_week + ' week(s)</p><button>View</button></div></center>';
+    return html;
+}
+
 function other_pets() {
     $('#home').attr('hidden', true);
     $('#application').attr('hidden', true);
@@ -162,7 +179,7 @@ function other_pets() {
                 '<center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>OTHER PETS IN NEED OF ADOPTION:</h1><hr>' +
                 response
                     .map(function(y) {
-                        return animals(y);
+                        return other_animals(y);
                     })
                     .join('');
             $('#adoption').html(other_pet);
