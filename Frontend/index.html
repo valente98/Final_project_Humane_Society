@@ -25,13 +25,14 @@
                     <a onclick="home()">Home</a>
                 </li>
                 <li>
-                    <a href="#">Volunteer</a>
-                </li>
-                <li>
-                    <a href="#">Adopt</a>
+                    <a onclick='FosterCare()'>Foster Care</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a onclick="manager_login()">
+                        <span class="glyphicon glyphicon-log-in"></span> Foster Parent Login</a>
+                </li>
                 <li>
                     <a onclick="manager_login()">
                         <span class="glyphicon glyphicon-log-in"></span> Manager Login</a>
@@ -137,10 +138,75 @@
         </div>
     </div>
     <div id="adoption" hidden="true"></div>
-    <div id="application" hidden="true"></div>
-    <div id="volunteer" hidden="true"></div>
-    <div id="foster_care" hidden="true"></div>
-    <div id="facility_care" hidden="true"></div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closemodel()">&times;</span>
+                <h1 id="popup_name"></h1>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the Modal Body</p>
+                <p>Some other text...</p>
+            </div>
+            <div class="modal-footer">
+                <button>ADOPT</button>
+            </div>
+        </div>
+    </div>
+    <div id="application" hidden="true">
+    </div>
+    <div id="volunteer" hidden="true">
+        <center>
+            <div class="container">
+                <img src="./images/logo.jpg" width="425" length="425" />
+            </div>
+        </center>
+        <div class="container">
+            <h1>VOLUNTEERING TYPE</h1>
+            <hr>
+            <div class="col-lg-6">
+                <button onclick="Facility()">Facility Work</button>
+            </div>
+            <div class="col-lg-6">
+                <button onclick="FosterCare()">Foster Care</button>
+            </div>
+        </div>
+    </div>
+    <div id="foster_care" hidden="true">
+        <center>
+            <div class="container">
+                <img src="./images/logo.jpg" width="425" length="425" />
+            </div>
+        </center>
+        <div class="container">
+            <h1>FOSTER CARE VOLUNTEER</h1>
+            <hr>
+            <br>
+            <br>
+            <div class='col-lg-8'>
+                <h1>It's easy and fun!</h1>
+                <hr>
+                <p>Please help us provide alternatives to euthanasia by being a foster family. Foster families help
+                    <br>us by providing temporary homes to adoptable pets when we are overcapacity or when the pet
+                    <br>needs a little extra TLC or socialization. Foster families also help us by promoting their foster
+                    <br> pets for adoption with their friends and social media network.
+                    <br>
+                    <br> Please consider this very important and life-saving mission of fostering!
+                    <br>
+                    <br>(The foster application is the same as the adoption application.)
+                </p>
+            </div>
+            <div class='col-lg-4'>
+                <h1>Sign up!</h1>
+                <hr>
+                <p>By signing up you will be ask to fill out an application that will need to be submited. After you have submited
+                    the application it will be review by our manager. If you get accepted you can login as a member there
+                    you will be giving information of what you are needed to do.
+                </p>
+                <button>SIGN UP</button>
+            </div>
+        </div>
+    </div>
     <div id="manager_id">
         <center>
             <div id="container">
@@ -184,7 +250,7 @@
                 </button>
             </div>
             <div class="col-lg-3">
-                <button>VOLUNTEER APPLICANTS</button>
+                <button>FOSTER APPLICANTS</button>
             </div>
             <div class="col-lg-3">
                 <button>ADOPTION APPLICANTS</button>

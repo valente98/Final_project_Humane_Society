@@ -49,6 +49,16 @@ addAnimal +=
     "<button class='submit-button' type='submit'>add animal</button></form>";
 addAnimal += "<div id='animalMessage'></div>";
 
+// When the user clicks on the button, open the modal
+function showInfo() {
+    $('#myModal').css('display', 'block');
+}
+
+// When the user clicks on <span> (x), close the modal
+function closemodel() {
+    $('#myModal').css('display', 'none');
+}
+
 function manager_login() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
@@ -93,7 +103,10 @@ function animals(x) {
     html += '<p>Color: ' + x.color + '</p>';
     html += '<p>Age: ' + x.age_year + ' year(s)<br>';
     html += '   ' + x.age_month + ' month(s)<br>    ';
-    html += x.age_week + ' week(s)</p><button>View</button></div></center>';
+    html +=
+        x.age_week +
+        ' week(s)</p><button onclick="showInfo()">View</button></div></center>';
+    $('#popup_name').html(x.name);
     return html;
 }
 
@@ -258,6 +271,36 @@ function home() {
     $('#application').attr('hidden', true);
     $('#volunteer').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+}
+
+function volunteer() {
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#volunteer').attr('hidden', false);
+    $('#foster_care').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+}
+
+function Facility() {
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#volunteer').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#facility_care').attr('hidden', false);
+    $('#manager_id').attr('hidden', true);
+}
+
+function FosterCare() {
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#volunteer').attr('hidden', true);
+    $('#foster_care').attr('hidden', false);
     $('#facility_care').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
 }

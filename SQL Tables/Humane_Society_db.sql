@@ -16,12 +16,6 @@ CREATE TABLE animals(
     spayed_or_neutured boolean
 );
 
-INSERT INTO animals(species, breed, name, male_female, age_year, age_month, age_week,
-size, color, intake_date, location, houseTrained, declawed, spayed_or_neutured) VALUES(
-    'rabbit','sam', 'havana rabbit', 'male', 1, 4, 2, 'small', 'brown', '2017-01-12', 'rabbit cage',
-    'false', 'false', 'false'
-);
-
 CREATE TABLE manager(
     id Serial Primary key,
     first_name text,
@@ -31,9 +25,10 @@ CREATE TABLE manager(
     email text
 );
 
-CREATE TABLE volunteer(
+CREATE TABLE foster_care(
     id Serial Primary key,
-    first_name text  unique,
+    user_id integer REFERENCES user_signup(id),
+    first_name text,
     last_name text,
     email text,
     cell_phone numeric,
@@ -42,28 +37,14 @@ CREATE TABLE volunteer(
     county text,
     home_address text,
     days numeric,
-    what_days text
+    what_days text,
+    id Serial Primary key,
+    first_name text,
+    last_name text,
+    username text,
+    password_hash text,
+    email text 
 );
-
-CREATE TABLE animal_care(
-    volunteer_id integer REFERENCES volunteer(id),
-    animal_id integer REFERENCES animals(id),
-    reason text
-    -- volunteer_contact numeric REFERENCES volunteer(cell_phone)
-);
-
-CREATE TABLE facility_care(
-    volunteer_id integer REFERENCES volunteer(id),
-    volunteer_date date,
-    volunteer_time time,
-    reason text
-);
-
-CREATE VIEW animal_care_with_volunteer AS
-SELECT *
-FROM animal_care ac
-JOIN volunteer v
-ON ac.volunteer_id = v.id;
 
 CREATE TABLE application(
     id Serial Primary key,

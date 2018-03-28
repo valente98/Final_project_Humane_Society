@@ -12,6 +12,11 @@ import java.sql.SQLException;
 public class ManagerControler {
     ManagerRepository manager = new ManagerRepository();
     @CrossOrigin()
+    @PostMapping("/insertManager")
+    public void inset_manager(@RequestBody Credentials cred)throws SQLException{
+        manager.insert_manager(cred.username, cred.password);
+    }
+    @CrossOrigin()
     @PostMapping("/login")
     public Boolean login(@RequestBody Credentials cred) throws SQLException {
         return manager.login(cred.username, cred.password);

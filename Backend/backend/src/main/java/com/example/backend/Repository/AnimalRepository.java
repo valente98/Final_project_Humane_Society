@@ -43,6 +43,7 @@ public class AnimalRepository {
         PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from animals Where not(species = 'dog' or species = 'cat')");
         ResultSet resultSet = preparedStatement.executeQuery();
         ArrayList allAnimal = new ArrayList();
+        System.out.println(resultSet);
         while(resultSet.next()){
             HashMap animals = new HashMap();
             animals.put("id", resultSet.getString("id"));
@@ -63,6 +64,7 @@ public class AnimalRepository {
             allAnimal.add(animals);
         }
         preparedStatement.close();
+        System.out.println(allAnimal);
         return allAnimal;
     }
 }
