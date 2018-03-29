@@ -25,6 +25,7 @@ public class ManagerRepository {
             preparedStatement.setString(5, "valvarez@basecampcodingacademy.org");
             System.out.println("success");
             preparedStatement.execute();
+            preparedStatement.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -41,6 +42,7 @@ public class ManagerRepository {
                 return true;
             }
         }
+        preparedStatement.close();
         return false;
     }
 

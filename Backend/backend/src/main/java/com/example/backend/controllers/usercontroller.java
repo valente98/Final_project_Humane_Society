@@ -21,4 +21,16 @@ public class usercontroller {
     public ArrayList otherPets() throws SQLException{
         return animals.getotherPets();
     }
+
+    @CrossOrigin()
+    @PostMapping("/FosterSignup")
+    public boolean FosterSignup (@RequestBody UserSignupCred user) throws SQLException{
+        return false;
+    }
+
+    @CrossOrigin()
+    @PostMapping("/FosterLogin")
+    public boolean FosterLogin (@RequestBody UserLoginCred user) throws SQLException{
+        return false;
+    }
 }
