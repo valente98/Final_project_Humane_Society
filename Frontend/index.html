@@ -155,23 +155,6 @@
     </div>
     <div id="application" hidden="true">
     </div>
-    <div id="volunteer" hidden="true">
-        <center>
-            <div class="container">
-                <img src="./images/logo.jpg" width="425" length="425" />
-            </div>
-        </center>
-        <div class="container">
-            <h1>VOLUNTEERING TYPE</h1>
-            <hr>
-            <div class="col-lg-6">
-                <button onclick="Facility()">Facility Work</button>
-            </div>
-            <div class="col-lg-6">
-                <button onclick="FosterCare()">Foster Care</button>
-            </div>
-        </div>
-    </div>
     <div id="foster_care" hidden="true">
         <center>
             <div class="container">
@@ -203,8 +186,63 @@
                     the application it will be review by our manager. If you get accepted you can login as a member there
                     you will be giving information of what you are needed to do.
                 </p>
-                <button>SIGN UP</button>
+                <button onclick="FosterSignup()">SIGN UP</button>
             </div>
+        </div>
+    </div>
+    <div id="FosterSignup" hidden="true">
+        <center>
+            <div class="container">
+                <img src="./images/logo.jpg" width="425" length="425" />
+            </div>
+        </center>
+        <div class="container">
+            <h1>FOSTER PARENT SIGN UP FORM</h1>
+            <hr>
+            <form>
+                <div class="col-lg-4">
+                    <p>First name:
+                        <br>
+                        <input id='first_name' name='first_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='first name'>
+                    </p>
+                    <p>Last name:
+                        <br>
+                        <input id='last_name' name='last_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='last name'>
+                    </p>
+                    <p>Email Address:
+                        <br>
+                        <input id='email' name='email' typ='text' autocomplete='off' value='' aria-required='true' placeholder='email'>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>City:
+                        <br>
+                        <input id='city' name='city' typ='text' autocomplete='off' value='' aria-required='true' placeholder='city'>
+                    </p>
+                    <p>County:
+                        <br>
+                        <input id='county' name='county' typ='text' autocomplete='off' value='' aria-required='true' placeholder='county'>
+                    </p>
+                    <p>Home Address:
+                        <br>
+                        <input id='home_address' name='home_address' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Address'>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Amount of Days want to Foster Care:
+                        <input id='days' name='days' typ='text' autocomplete='off' value='' aria-required='true' placeholder='number of days'>
+                    </p>
+                    <p>Username:
+                        <br>
+                        <input id='username' name='username' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Username'>
+                    </p>
+                    <p>Password:
+                        <br>
+                        <input id='password' name='password' typ='text' autocomplete='off' value='' aria-required='true' placeholder='password'>
+                    </p>
+                    <button class="submit-button">SIGN UP</button>
+                </div>
+            </form>
         </div>
     </div>
     <div id="manager_id">
