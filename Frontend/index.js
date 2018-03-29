@@ -63,9 +63,8 @@ function manager_login() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
-    $('#facility_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#manager_id').attr('hidden', false);
     $('#user-info').on('submit', function(event) {
         event.preventDefault();
@@ -114,8 +113,7 @@ function show_animals(animal) {
     console.log(animal);
     $('#home').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
-    $('#foster_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#facility_care').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
 
@@ -174,10 +172,11 @@ function other_animals(x) {
 function other_pets() {
     $('#home').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
-    $('#facility_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
+    $('#manager_page').attr('hidden', true);
+    $('#manager_choice').attr('hidden', true);
     $('#adoption').attr('hidden', false);
     $.ajax({
         url: 'http://localhost:8080/otherPets',
@@ -207,9 +206,8 @@ function manager_page() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
-    $('#facility_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
     $('#manager_choice').attr('hidden', true);
     $('#manager_page').attr('hidden', false);
@@ -269,8 +267,7 @@ function home() {
     $('#home').attr('hidden', false);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
-    $('#foster_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#facility_care').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
 }
@@ -279,19 +276,17 @@ function volunteer() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', false);
     $('#foster_care').attr('hidden', true);
-    $('#facility_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
 }
 
-function Facility() {
+function FosterSignup() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
-    $('#facility_care').attr('hidden', false);
+    $('#FosterSingup').attr('hidden', false);
     $('#manager_id').attr('hidden', true);
 }
 
@@ -299,9 +294,8 @@ function FosterCare() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#volunteer').attr('hidden', true);
     $('#foster_care').attr('hidden', false);
-    $('#facility_care').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
 }
 
