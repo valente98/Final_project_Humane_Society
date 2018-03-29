@@ -33,13 +33,10 @@ CREATE TABLE foster_care(
     first_name text,
     last_name text,
     email text,
-    cell_phone numeric,
-    volunteer_type text,
     city text,
     county text,
     home_address text,
     days numeric,
-    what_days text,
     username text,
     password_hash text
 );
@@ -50,7 +47,6 @@ CREATE TABLE application(
     last_name text,
     age numeric,
     email text,
-    cell_phone text,
     animal_adopting_id integer REFERENCES animals(id),
     city text,
     county text,
@@ -64,7 +60,6 @@ CREATE TABLE application(
     kept_at_night text,
     surrender_animals_at_us boolean,
     adopted_from_us_before boolean,
-    shelter_description text,
     current_veterinarian_name text,
     if_no_vet_name_vet_planing text,
     saw_pet_first text
