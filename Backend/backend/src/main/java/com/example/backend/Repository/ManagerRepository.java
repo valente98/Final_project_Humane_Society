@@ -39,7 +39,7 @@ public class ManagerRepository {
         while (resultSet.next()) {
             String hashpassword = resultSet.getString("password_hash");
             if (hash(password).equals(hashpassword)) {
-                return true;
+
             }
         }
         preparedStatement.close();

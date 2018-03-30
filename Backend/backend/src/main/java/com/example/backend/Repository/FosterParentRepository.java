@@ -1,5 +1,6 @@
 package com.example.backend.Repository;
 
+import com.example.backend.controllers.UserSignupCred;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
@@ -15,13 +16,13 @@ public class FosterParentRepository {
         return pw;
     }
 
-    public void FosterParent_signup(String first_name, String last_name, String email, String city, String county, String home_address,
-                               Integer days, String username, String password_hash){
+    public UserSignupCred FosterParent_signup(String first_name, String last_name, String email, String city, String county, String home_address,
+                                              Integer days, String username, String password_hash, String sessionKey){
         try {
             Connection conn = JDBCConnect.getDatabase();
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO foster_care (first_name, last_name," +
-                    "email, city, county, home_address, days, username, password_hash) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "email, city, county, home_address, days, username, password_hash, sessionKey) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) Returning *");
             preparedStatement.setString(1, first_name);
             preparedStatement.setString(2, last_name);
             preparedStatement.setString(3, email);
@@ -32,26 +33,58 @@ public class FosterParentRepository {
             preparedStatement.setString(8, username);
             String passwordhash = hash(password_hash);
             preparedStatement.setString(9, passwordhash);
-            preparedStatement.execute();
-            preparedStatement.close();
-            System.out.println("success");
+            preparedStatement.setString(10,sessionKey);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            conn.close();
+            return new UserSignupCred(resultSet.getInt("id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("email"),
+                    resultSet.getString("city"),
+                    resultSet.getString("county"),
+                    resultSet.getString("home_address"),
+                    resultSet.getInt("days"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password_hash"),
+                    resultSet.getString("sessionKey"));
+
         }catch(SQLException e){
+            System.out.println("error: ");
             System.out.println(e.getMessage());
+            return null;
         }
     }
 
-    public Boolean FosterParent_login(String username, String password) throws SQLException{
+    public UserSignupCred FosterParent_login(String username, String password, String sessionKey) throws SQLException{
             Connection conn = JDBCConnect.getDatabase();
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from foster_care WHERE username = ? ");
-            preparedStatement.setString(1, username);
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE foster_care SET sessionKey = ? WHERE username = ? and password_hash = ? returning *");
+            preparedStatement.setString(1, sessionKey);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, hash(password));
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String hashpassword = resultSet.getString("password_hash");
-                if (hash(password).equals(hashpassword)) {
-                    return true;
-                }
-            }
-            preparedStatement.close();
-            return false;
+            resultSet.next();
+            conn.close();
+            return new UserSignupCred(resultSet.getInt("id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("email"),
+                resultSet.getString("city"),
+                resultSet.getString("county"),
+                resultSet.getString("home_address"),
+                resultSet.getInt("days"),
+                resultSet.getString("username"),
+                resultSet.getString("password_hash"),
+                resultSet.getString("sessionKey"));
+    }
+
+    public boolean FosterParent_logout(String sessionKey) throws SQLException{
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement(
+                "UPDATE foster_care SET sessionKey = null WHERE sessionKey = ? RETURNING *"
+        );
+        preparedStatement.setString(1,sessionKey);
+        return preparedStatement.execute();
     }
 }

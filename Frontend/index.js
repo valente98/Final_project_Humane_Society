@@ -1,98 +1,68 @@
-var addAnimal =
-    "<center><img src='./images/logo.jpg' width='425' length='425'/></center>";
-addAnimal += "<div class='container'> <h1>ADD ANIMAL</h1><hr>";
-addAnimal +=
-    "<form id='animal-insert'><div class='col-lg-3'><p>What kind of animals is it? (dog, cat, etc.)<br>";
-addAnimal +=
-    "<input id='species' name='species' typ='text' autocomplete='off' value='' aria-required='true' placeholder='species'><p>";
-addAnimal += '<p>What kind of breed is it?';
-addAnimal +=
-    "<input id='breed' name='breed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='breed'><p>";
-addAnimal += '<p>What is the name of it?';
-addAnimal +=
-    "<input id='name' name='name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='name'><p>";
-addAnimal += '<p>Is the animal Male of Female?';
-addAnimal +=
-    "<input id='male_female' name='male_female' typ='text' autocomplete='off' value='' aria-required='true' placeholder='gender'><p></div>";
-addAnimal += "<div class='col-lg-3'>";
-addAnimal += '<p>Age of the animal';
-addAnimal +=
-    "<input id='year' name='year' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='years'>";
-addAnimal +=
-    "<input id='month' name='month' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='months'>";
-addAnimal +=
-    "<input id='week' name='week' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='weeks'><p>";
-addAnimal += '<p> what size is the animal? (small, medium, large, etc.)<br>';
-addAnimal +=
-    "<input id='size' name='size' typ='text' autocomplete='off' value='' aria-required='true' placeholder='size'><p>";
-addAnimal += '<p> What is the color of the animal?';
-addAnimal +=
-    "<input id='color' name='color' typ='text' autocomplete='off' value='' aria-required='true' placeholder='color'><p></div>";
-addAnimal +=
-    "<div class='col-lg-3'><p>What is the intake date? (yyyy-mm-dd)<br>";
-addAnimal +=
-    "<input id='date' name='date' typ='text' autocomplete='off' value='' aria-required='true' placeholder='yyyy-mm-dd'><p>";
-addAnimal += '<p>Where is the animal located? (Foster care, puppy cage, etc.)';
-addAnimal +=
-    "<input id='location' name='location' typ='text' autocomplete='off' value='' aria-required='true' placeholder='location'><p>";
-addAnimal += '<p>Is the animal housetrained?';
-addAnimal +=
-    "<input id='housetrained' name='housetrained' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'><p>";
-addAnimal += '<p>Is the animal declawed?';
-addAnimal +=
-    "<input id='declawed' name='declawed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'><p></div>";
-addAnimal += '<div class="col-lg-3">';
-addAnimal += '<p>Is the animal spayed or neutured?</p>';
-addAnimal +=
-    "<input id='spayed_neutured' name='spayed_neutured' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'></div>";
-addAnimal +=
-    "<button class='submit-button' type='submit'>add animal</button></form>";
-addAnimal += "<div id='animalMessage'></div>";
-
-// When the user clicks on the button, open the modal
-function showInfo() {
-    $('#myModal').css('display', 'block');
+//**********this functions direct where the user needs to be when they click on button*********************/
+function home() {
+    $('#home').attr('hidden', false);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+    $('#foster_page').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#FosterLogin').attr('hidden', true);
 }
-
-// When the user clicks on <span> (x), close the modal
-function closemodel() {
-    $('#myModal').css('display', 'none');
+function FosterSignup() {
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', false);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+    $('#foster_page').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#FosterLogin').attr('hidden', true);
 }
-
-function manager_login() {
+function FosterLogin() {
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+    $('#foster_page').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#FosterLogin').attr('hidden', false);
+}
+function FosterCare() {
+    $('#home').attr('hidden', false);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+    $('#foster_page').attr('hidden', true);
+    $('#foster_care').attr('hidden', false);
+    $('#FosterLogin').attr('hidden', true);
+}
+function manager_page() {
+    $('.navbar').attr('hidden', true);
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
     $('#FosterSignup').attr('hidden', true);
-    $('#manager_id').attr('hidden', false);
-    $('#user-info').on('submit', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: 'http://localhost:8080/login',
-            type: 'POST',
-            data: JSON.stringify({
-                username: $('#username-input').val(),
-                password: $('#password-input').val()
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
-        })
-            .then(function handleFeedResponse(response) {
-                if (response) {
-                    manager_page();
-                } else {
-                    $('.form-group').addClass('has-danger');
-                    $('#password-input').val('');
-                    $('#login-error').html('Incorrect username or password');
-                }
-            })
-            .catch(function handleErrorResponse(err) {
-                console.log(err);
-            });
-    });
+    $('#manager_id').attr('hidden', true);
+    $('#manager_choice').attr('hidden', true);
+    $('#manager_page').attr('hidden', false);
 }
+//*********************************************************************************************************/
 
+//**********this will show the animals and the animals info ***********************************************/
+function showInfo() {
+    $('#myModal').css('display', 'block');
+}
+function closemodel() {
+    $('#myModal').css('display', 'none');
+}
 function animals(x) {
     var html =
         '<center><div class="col-lg-3"><p><img src="./images/animallogo.jpg" width="225" height="225"/></p>';
@@ -108,7 +78,6 @@ function animals(x) {
     $('#popup_name').html(x.name);
     return html;
 }
-
 function show_animals(animal) {
     console.log(animal);
     $('#home').attr('hidden', true);
@@ -154,7 +123,6 @@ function show_animals(animal) {
             console.log(err);
         });
 }
-
 function other_animals(x) {
     var html =
         '<center><div class="col-lg-3"><p><img src="./images/animallogo.jpg" width="225" height="225"/></p>';
@@ -168,7 +136,6 @@ function other_animals(x) {
     html += x.age_week + ' week(s)</p><button>View</button></div></center>';
     return html;
 }
-
 function other_pets() {
     $('#home').attr('hidden', true);
     $('#application').attr('hidden', true);
@@ -200,23 +167,93 @@ function other_pets() {
             console.log(err);
         });
 }
+//***********************************************************************************************************/
 
-function manager_page() {
-    $('.navbar').attr('hidden', true);
+//**************this is all of the login, signup, and logout for the user and manager ***********************/
+function manager_login() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
-    $('#foster_care').attr('hidden', true);
     $('#FosterSignup').attr('hidden', true);
-    $('#manager_id').attr('hidden', true);
-    $('#manager_choice').attr('hidden', true);
-    $('#manager_page').attr('hidden', false);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', false);
+    $('#foster_page').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#FosterLogin').attr('hidden', true);
+    $('#user-info').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'http://localhost:8080/login',
+            type: 'POST',
+            data: JSON.stringify({
+                username: $('#username-input').val(),
+                password: $('#password-input').val()
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        })
+            .then(function handleFeedResponse(response) {
+                if (response) {
+                    manager_page();
+                } else {
+                    $('.form-group').addClass('has-danger');
+                    $('#password-input').val('');
+                    $('#login-error').html('Incorrect username or password');
+                }
+            })
+            .catch(function handleErrorResponse(err) {
+                console.log(err);
+            });
+    });
 }
+function FosterParentLogin() {}
+function FosterParentSignup() {
+    $('#foster-signup').on('submit', function(event) {
+        event.preventDefault();
+        console.log($('#first_name').val());
+        console.log(event);
+        $('#foster_page').attr('hidden', false);
+        $('#home').attr('hidden', true);
+        $('#adoption').attr('hidden', true);
+        $('#application').attr('hidden', true);
+        $('#FosterSignup').attr('hidden', true);
+        $('#facility_care').attr('hidden', true);
+        $('#manager_id').attr('hidden', true);
+        $.ajax({
+            url: 'http://localhost:8080/FosterSignup',
+            type: 'POST',
+            data: JSON.stringify({
+                first_name: $('#first_name').val(),
+                last_name: $('#last_name').val(),
+                email: $('#email').val(),
+                city: $('#city').val(),
+                county: $('#county').val(),
+                home_address: $('#home_address').val(),
+                days: $('#days').val(),
+                username: $('#username').val(),
+                password_hash: $('#password').val()
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        })
+            .then(function handleFeedResponse(reponse) {
+                console.log(reponse);
+                var feed = foster_page(reponse);
+                $('#foster_page').html(feed);
+            })
+            .catch(function handleErrorResponse(err) {
+                console.log(err);
+                console.log('this did not work');
+            });
+    });
+}
+//***********************************************************************************************************/
 
+//**************this is all of the thing that the user or manager can do once they login ********************/
 function insertAnimal() {
     $('#manager_page').attr('hidden', true);
     $('#manager_choice').attr('hidden', false);
-    $('#manager_choice').html(addAnimal);
+    $('#manager_choice').html(AddAnimal());
     $('#animal-insert').on('submit', function(event) {
         console.log(event);
         event.preventDefault();
@@ -262,41 +299,77 @@ function insertAnimal() {
             });
     });
 }
-
-function home() {
-    $('#home').attr('hidden', false);
-    $('#adoption').attr('hidden', true);
-    $('#application').attr('hidden', true);
-    $('#FosterSignup').attr('hidden', true);
-    $('#facility_care').attr('hidden', true);
-    $('#manager_id').attr('hidden', true);
+function AddAnimal() {
+    var addAnimal =
+        "<center><img src='./images/logo.jpg' width='425' length='425'/></center>";
+    addAnimal += "<div class='container'> <h1>ADD ANIMAL</h1><hr>";
+    addAnimal +=
+        "<form id='animal-insert'><div class='col-lg-3'><p>What kind of animals is it? (dog, cat, etc.)<br>";
+    addAnimal +=
+        "<input id='species' name='species' typ='text' autocomplete='off' value='' aria-required='true' placeholder='species'><p>";
+    addAnimal += '<p>What kind of breed is it?';
+    addAnimal +=
+        "<input id='breed' name='breed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='breed'><p>";
+    addAnimal += '<p>What is the name of it?';
+    addAnimal +=
+        "<input id='name' name='name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='name'><p>";
+    addAnimal += '<p>Is the animal Male of Female?';
+    addAnimal +=
+        "<input id='male_female' name='male_female' typ='text' autocomplete='off' value='' aria-required='true' placeholder='gender'><p></div>";
+    addAnimal += "<div class='col-lg-3'>";
+    addAnimal += '<p>Age of the animal';
+    addAnimal +=
+        "<input id='year' name='year' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='years'>";
+    addAnimal +=
+        "<input id='month' name='month' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='months'>";
+    addAnimal +=
+        "<input id='week' name='week' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='weeks'><p>";
+    addAnimal +=
+        '<p> what size is the animal? (small, medium, large, etc.)<br>';
+    addAnimal +=
+        "<input id='size' name='size' typ='text' autocomplete='off' value='' aria-required='true' placeholder='size'><p>";
+    addAnimal += '<p> What is the color of the animal?';
+    addAnimal +=
+        "<input id='color' name='color' typ='text' autocomplete='off' value='' aria-required='true' placeholder='color'><p></div>";
+    addAnimal +=
+        "<div class='col-lg-3'><p>What is the intake date? (yyyy-mm-dd)<br>";
+    addAnimal +=
+        "<input id='date' name='date' typ='text' autocomplete='off' value='' aria-required='true' placeholder='yyyy-mm-dd'><p>";
+    addAnimal +=
+        '<p>Where is the animal located? (Foster care, puppy cage, etc.)';
+    addAnimal +=
+        "<input id='location' name='location' typ='text' autocomplete='off' value='' aria-required='true' placeholder='location'><p>";
+    addAnimal += '<p>Is the animal housetrained?';
+    addAnimal +=
+        "<input id='housetrained' name='housetrained' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'><p>";
+    addAnimal += '<p>Is the animal declawed?';
+    addAnimal +=
+        "<input id='declawed' name='declawed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'><p></div>";
+    addAnimal += '<div class="col-lg-3">';
+    addAnimal += '<p>Is the animal spayed or neutured?</p>';
+    addAnimal +=
+        "<input id='spayed_neutured' name='spayed_neutured' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'></div>";
+    addAnimal +=
+        "<button class='submit-button' type='submit'>add animal</button></form>";
+    addAnimal += "<div id='animalMessage'></div>";
+    return addAnimal;
+}
+function foster_page(x) {
+    var html = '<p>' + x.first_name + '</p>';
+    html += '<p>' + x.last_name + '</p>';
+    html += '<p>' + x.email + '</p>';
+    html += '<p>' + x.city + '</p>';
+    html += '<p>' + x.county + '</p>';
+    html += '<p>' + x.home_address + '</p>';
+    html += '<p>' + x.days + '</p>';
+    html += '<p>' + x.username + '</p>';
+    html += '<p>' + x.password_hash + '</p>';
+    return html;
+}
+//***********************************************************************************************************/
+function main() {
+    home();
+    FosterParentSignup();
 }
 
-function volunteer() {
-    $('#home').attr('hidden', true);
-    $('#adoption').attr('hidden', true);
-    $('#application').attr('hidden', true);
-    $('#foster_care').attr('hidden', true);
-    $('#FosterSignup').attr('hidden', true);
-    $('#manager_id').attr('hidden', true);
-}
-
-function FosterSignup() {
-    $('#home').attr('hidden', true);
-    $('#adoption').attr('hidden', true);
-    $('#application').attr('hidden', true);
-    $('#foster_care').attr('hidden', true);
-    $('#FosterSingup').attr('hidden', false);
-    $('#manager_id').attr('hidden', true);
-}
-
-function FosterCare() {
-    $('#home').attr('hidden', true);
-    $('#adoption').attr('hidden', true);
-    $('#application').attr('hidden', true);
-    $('#foster_care').attr('hidden', false);
-    $('#FosterSignup').attr('hidden', true);
-    $('#manager_id').attr('hidden', true);
-}
-
-window.onload = home;
+$(main);

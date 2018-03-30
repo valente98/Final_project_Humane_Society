@@ -38,7 +38,8 @@ CREATE TABLE foster_care(
     home_address text,
     days numeric,
     username text,
-    password_hash text
+    password_hash text,
+    sessionKey text
 );
 
 CREATE TABLE application(

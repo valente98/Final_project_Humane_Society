@@ -1,15 +1,18 @@
 package com.example.backend.controllers;
 
 import com.example.backend.Repository.AnimalRepository;
+import com.example.backend.Repository.FosterParentRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 @RestController
 public class usercontroller {
 
     AnimalRepository animals = new AnimalRepository();
+    FosterParentRepository foster = new FosterParentRepository();
     @CrossOrigin()
     @PostMapping("/showAnimals")
     public ArrayList pets(@RequestBody SpeciesCred animal) throws SQLException{
@@ -22,15 +25,36 @@ public class usercontroller {
         return animals.getotherPets();
     }
 
+    String CreateSessionKey(){
+        String alphabet= "abcdefghijklmonpqrstuvwxyz0123456789!@#$%^&*(){}[]?.";
+        String sessionKey ="";
+        Random random = new Random();
+        int random_int = 12 + random.nextInt(9);
+        for(int i =0; i < random_int; i++){
+            char c = alphabet.charAt(random.nextInt(26));
+            sessionKey+=c;
+        }
+        return sessionKey;
+    }
+
     @CrossOrigin()
     @PostMapping("/FosterSignup")
-    public boolean FosterSignup (@RequestBody UserSignupCred user) throws SQLException{
-        return false;
+    public  UserSignupCred FosterParentSignUp (@RequestBody signupcred user) throws SQLException{
+        String sessionKey = CreateSessionKey();
+        return foster.FosterParent_signup(user.first_name, user.last_name, user.email, user.city, user.county, user.home_address, user.days,
+                user.username, user.password_hash, sessionKey);
     }
 
     @CrossOrigin()
     @PostMapping("/FosterLogin")
-    public boolean FosterLogin (@RequestBody UserLoginCred user) throws SQLException{
-        return false;
+    public UserSignupCred FosterLogin (@RequestBody UserLoginCred user) throws SQLException{
+        String sessionKey = CreateSessionKey();
+        return foster.FosterParent_login(user.username, user.password_hash, sessionKey);
+    }
+
+    @CrossOrigin()
+    @PostMapping("/LogOut")
+    public boolean FosterLogout(@PathVariable String sessionKey)throws SQLException{
+        return foster.FosterParent_logout(sessionKey);
     }
 }
