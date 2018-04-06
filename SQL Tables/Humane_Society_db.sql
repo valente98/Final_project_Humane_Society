@@ -22,12 +22,10 @@ CREATE TABLE manager(
     last_name text,
     username varchar(100),
     password_hash varchar(100),
-    email text
+    email text,
+    sessionKey text
 );
 
-INSERT INTO manager(first_name, last_name, username, password_hash, email) VALUES(
-    'Valente', 'Alvarez', 'valvarez12', '$2a$10$n8bYXVib6.SmjQPJRazwk.IGILPXEa1BoZN3z.XkSXxEgJbuZ5f2i', 'valvarez@basecampcodingacademy.org'
-);
 CREATE TABLE foster_care(
     id Serial Primary key,
     first_name text,

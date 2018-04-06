@@ -53,8 +53,9 @@ public class usercontroller {
     }
 
     @CrossOrigin()
-    @PostMapping("/LogOut")
-    public boolean FosterLogout(@PathVariable String sessionKey)throws SQLException{
-        return foster.FosterParent_logout(sessionKey);
+    @PostMapping("/FosterLogOut/{id}")
+    public boolean FosterLogout(@PathVariable Integer id)throws SQLException{
+        System.out.println(id);
+        return foster.FosterParent_logout(id);
     }
 }

@@ -21,6 +21,16 @@ function FosterSignup() {
     $('#foster_care').attr('hidden', true);
     $('#FosterLogin').attr('hidden', true);
 }
+function FosterPage() {
+    $('#foster_page').attr('hidden', false);
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#FosterLogin').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', true);
+}
 function FosterLogin() {
     $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
@@ -33,7 +43,7 @@ function FosterLogin() {
     $('#FosterLogin').attr('hidden', false);
 }
 function FosterCare() {
-    $('#home').attr('hidden', false);
+    $('#home').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
     $('#FosterSignup').attr('hidden', true);
@@ -53,6 +63,17 @@ function manager_page() {
     $('#manager_id').attr('hidden', true);
     $('#manager_choice').attr('hidden', true);
     $('#manager_page').attr('hidden', false);
+}
+function manager() {
+    $('#home').attr('hidden', true);
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', true);
+    $('#FosterSignup').attr('hidden', true);
+    $('#facility_care').attr('hidden', true);
+    $('#manager_id').attr('hidden', false);
+    $('#foster_page').attr('hidden', true);
+    $('#foster_care').attr('hidden', true);
+    $('#FosterLogin').attr('hidden', true);
 }
 //*********************************************************************************************************/
 
@@ -171,19 +192,10 @@ function other_pets() {
 
 //**************this is all of the login, signup, and logout for the user and manager ***********************/
 function manager_login() {
-    $('#home').attr('hidden', true);
-    $('#adoption').attr('hidden', true);
-    $('#application').attr('hidden', true);
-    $('#FosterSignup').attr('hidden', true);
-    $('#facility_care').attr('hidden', true);
-    $('#manager_id').attr('hidden', false);
-    $('#foster_page').attr('hidden', true);
-    $('#foster_care').attr('hidden', true);
-    $('#FosterLogin').attr('hidden', true);
     $('#user-info').on('submit', function(event) {
         event.preventDefault();
         $.ajax({
-            url: 'http://localhost:8080/login',
+            url: 'http://localhost:8080/insertManager',
             type: 'POST',
             data: JSON.stringify({
                 username: $('#username-input').val(),
@@ -193,6 +205,7 @@ function manager_login() {
             dataType: 'json'
         })
             .then(function handleFeedResponse(response) {
+                manager_login();
                 if (response) {
                     manager_page();
                 } else {
@@ -206,19 +219,37 @@ function manager_login() {
             });
     });
 }
-function FosterParentLogin() {}
+function FosterParentLogin() {
+    $('#foster-login').on('submit', function(event) {
+        console.log(event);
+        event.preventDefault();
+        $.ajax({
+            url: 'http://localhost:8080/FosterLogin',
+            type: 'POST',
+            data: JSON.stringify({
+                username: $('#Foster-username').val(),
+                password_hash: $('#Foster-password').val()
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        })
+            .then(function handleFeedResponse(response) {
+                console.log(reponse);
+                FosterPage();
+                var feed = foster_page(response);
+                $('#foster_page').html(feed);
+            })
+            .catch(function handleErrorResponse(err) {
+                console.log(err);
+                console.log('this did not work');
+            });
+    });
+}
 function FosterParentSignup() {
     $('#foster-signup').on('submit', function(event) {
         event.preventDefault();
         console.log($('#first_name').val());
         console.log(event);
-        $('#foster_page').attr('hidden', false);
-        $('#home').attr('hidden', true);
-        $('#adoption').attr('hidden', true);
-        $('#application').attr('hidden', true);
-        $('#FosterSignup').attr('hidden', true);
-        $('#facility_care').attr('hidden', true);
-        $('#manager_id').attr('hidden', true);
         $.ajax({
             url: 'http://localhost:8080/FosterSignup',
             type: 'POST',
@@ -238,6 +269,7 @@ function FosterParentSignup() {
         })
             .then(function handleFeedResponse(reponse) {
                 console.log(reponse);
+                FosterPage();
                 var feed = foster_page(reponse);
                 $('#foster_page').html(feed);
             })
@@ -247,6 +279,26 @@ function FosterParentSignup() {
             });
     });
 }
+function FosterParentLogout(id) {
+    $.ajax({
+        url: 'http://localhost:8080/FosterLogOut/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            if (response) {
+                home();
+            } else {
+                console.log('this does not work either');
+            }
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+
 //***********************************************************************************************************/
 
 //**************this is all of the thing that the user or manager can do once they login ********************/
@@ -364,6 +416,8 @@ function foster_page(x) {
     html += '<p>' + x.days + '</p>';
     html += '<p>' + x.username + '</p>';
     html += '<p>' + x.password_hash + '</p>';
+    html +=
+        '<button onclick="FosterParentLogout(' + x.id + ')"> Log out</button>';
     return html;
 }
 //***********************************************************************************************************/

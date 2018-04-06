@@ -79,12 +79,12 @@ public class FosterParentRepository {
                 resultSet.getString("sessionKey"));
     }
 
-    public boolean FosterParent_logout(String sessionKey) throws SQLException{
+    public boolean FosterParent_logout(Integer id) throws SQLException{
         Connection conn = JDBCConnect.getDatabase();
         PreparedStatement preparedStatement = conn.prepareStatement(
-                "UPDATE foster_care SET sessionKey = null WHERE sessionKey = ? RETURNING *"
+                "UPDATE foster_care SET sessionKey = null WHERE id = ? RETURNING *"
         );
-        preparedStatement.setString(1,sessionKey);
+        preparedStatement.setInt(1, id);
         return preparedStatement.execute();
     }
 }

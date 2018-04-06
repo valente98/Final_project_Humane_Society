@@ -11,11 +11,11 @@ public class ManagerRepository {
         return pw;
     }
 
-    public void insert_manager(String username, String password){
+    public void insert_manager(String username, String password, String sessionKey){
         try {
             Connection conn = JDBCConnect.getDatabase();
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO manager (first_name, last_name, username, password_hash, email) VALUES(?, " +
-                    "?, ?, ?, ?)");
+            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO manager (first_name, last_name, username, password_hash, email, sessionKey) VALUES(?, " +
+                    "?, ?, ?, ?, ?)");
             preparedStatement.setString(1, "Valente");
             preparedStatement.setString(2, "Alvarez");
             preparedStatement.setString(3, username);
@@ -23,6 +23,7 @@ public class ManagerRepository {
             System.out.println(passwordhash);
             preparedStatement.setString(4, passwordhash);
             preparedStatement.setString(5, "valvarez@basecampcodingacademy.org");
+            preparedStatement.setString(6, sessionKey);
             System.out.println("success");
             preparedStatement.execute();
             preparedStatement.close();
