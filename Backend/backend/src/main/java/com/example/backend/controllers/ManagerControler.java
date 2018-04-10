@@ -1,10 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.Repository.ManagerRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Random;
@@ -31,9 +28,17 @@ public class ManagerControler {
     }
     @CrossOrigin()
     @PostMapping("/managerLogin")
-    public Boolean login(@RequestBody Credentials cred) throws SQLException {
-        return manager.login(cred.username, cred.password);
+    public ManagerCred login(@RequestBody Credentials cred) throws SQLException {
+        String sessionKey= CreateSessionKey();
+        return manager.login(cred.username, cred.password, sessionKey);
     }
+
+    @CrossOrigin()
+    @PostMapping("/managerLogOut/{id}")
+    public boolean managerLogOut(@PathVariable Integer id)throws SQLException{
+        return manager.Manager_logout(id);
+    }
+
     @CrossOrigin()
     @PostMapping("/insertAnimal")
     public Boolean insertAnimal(@RequestBody Animals animal) throws SQLException{
