@@ -1,11 +1,13 @@
 //**********this functions direct where the user needs to be when they click on button*********************/
 function home() {
     $('#home').attr('hidden', false);
+    $('.navbar').attr('hidden', false);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
     $('#FosterSignup').attr('hidden', true);
     $('#facility_care').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
+    $('#manager_page').attr('hidden', true);
     $('#foster_page').attr('hidden', true);
     $('#foster_care').attr('hidden', true);
     $('#FosterLogin').attr('hidden', true);
@@ -24,6 +26,7 @@ function FosterSignup() {
 function FosterPage() {
     $('#foster_page').attr('hidden', false);
     $('#home').attr('hidden', true);
+    $('.navbar').attr('hidden', true);
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', true);
     $('#FosterLogin').attr('hidden', true);
@@ -191,94 +194,108 @@ function other_pets() {
 //***********************************************************************************************************/
 
 //**************this is all of the login, signup, and logout for the user and manager ***********************/
-function manager_login() {
-    $('#user-info').on('submit', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: 'http://localhost:8080/insertManager',
-            type: 'POST',
-            data: JSON.stringify({
-                username: $('#username-input').val(),
-                password: $('#password-input').val()
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
+$('#manager-login').submit(function(event) {
+    console.log(event);
+    event.preventDefault();
+    $.ajax({
+        url: 'http://localhost:8080/managerLogin',
+        type: 'POST',
+        data: JSON.stringify({
+            username: $('#username-input').val(),
+            password: $('#password-input').val()
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            if (response) {
+                manager_page();
+            } else {
+                $('.form-group').addClass('has-danger');
+                $('#password-input').val('');
+                $('#login-error').html('Incorrect username or password');
+            }
         })
-            .then(function handleFeedResponse(response) {
-                manager_login();
-                if (response) {
-                    manager_page();
-                } else {
-                    $('.form-group').addClass('has-danger');
-                    $('#password-input').val('');
-                    $('#login-error').html('Incorrect username or password');
-                }
-            })
-            .catch(function handleErrorResponse(err) {
-                console.log(err);
-            });
-    });
-}
-function FosterParentLogin() {
-    $('#foster-login').on('submit', function(event) {
-        console.log(event);
-        event.preventDefault();
-        $.ajax({
-            url: 'http://localhost:8080/FosterLogin',
-            type: 'POST',
-            data: JSON.stringify({
-                username: $('#Foster-username').val(),
-                password_hash: $('#Foster-password').val()
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+});
+function manager_logout(id) {
+    console.log(id);
+    $.ajax({
+        url: 'http://localhost:8080/managerLogOut/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            if (response) {
+                home();
+            } else {
+                console.log('this does not work either');
+            }
         })
-            .then(function handleFeedResponse(response) {
-                console.log(reponse);
-                FosterPage();
-                var feed = foster_page(response);
-                $('#foster_page').html(feed);
-            })
-            .catch(function handleErrorResponse(err) {
-                console.log(err);
-                console.log('this did not work');
-            });
-    });
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
 }
-function FosterParentSignup() {
-    $('#foster-signup').on('submit', function(event) {
-        event.preventDefault();
-        console.log($('#first_name').val());
-        console.log(event);
-        $.ajax({
-            url: 'http://localhost:8080/FosterSignup',
-            type: 'POST',
-            data: JSON.stringify({
-                first_name: $('#first_name').val(),
-                last_name: $('#last_name').val(),
-                email: $('#email').val(),
-                city: $('#city').val(),
-                county: $('#county').val(),
-                home_address: $('#home_address').val(),
-                days: $('#days').val(),
-                username: $('#username').val(),
-                password_hash: $('#password').val()
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
+$('#foster-login').submit(function(event) {
+    event.preventDefault();
+    console.log($('#Foster-username').val());
+    $.ajax({
+        url: 'http://localhost:8080/FosterLogin',
+        type: 'POST',
+        data: JSON.stringify({
+            username: $('#Foster-username').val(),
+            password_hash: $('#Foster-password').val()
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            FosterPage();
+            var feed = foster_page(response);
+            $('#foster_page').html(feed);
         })
-            .then(function handleFeedResponse(reponse) {
-                console.log(reponse);
-                FosterPage();
-                var feed = foster_page(reponse);
-                $('#foster_page').html(feed);
-            })
-            .catch(function handleErrorResponse(err) {
-                console.log(err);
-                console.log('this did not work');
-            });
-    });
-}
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+            console.log('this did not work');
+        });
+});
+$('#foster-signup').on('submit', function FosterParentSignup(event) {
+    event.preventDefault();
+    console.log($('#first_name').val());
+    console.log(event);
+    $.ajax({
+        url: 'http://localhost:8080/FosterSignup',
+        type: 'POST',
+        data: JSON.stringify({
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            email: $('#email').val(),
+            city: $('#city').val(),
+            county: $('#county').val(),
+            home_address: $('#home_address').val(),
+            username: $('#username').val(),
+            password_hash: $('#password').val()
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            FosterPage();
+            var feed = foster_page(response);
+            $('#foster_page').html(feed);
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+            console.log('this did not work');
+        });
+});
 function FosterParentLogout(id) {
     $.ajax({
         url: 'http://localhost:8080/FosterLogOut/' + id,
@@ -407,23 +424,38 @@ function AddAnimal() {
     return addAnimal;
 }
 function foster_page(x) {
-    var html = '<p>' + x.first_name + '</p>';
-    html += '<p>' + x.last_name + '</p>';
+    var html =
+        '<button onclick="FosterParentLogout(' + x.id + ')"> Log out </button>';
+    html +=
+        '<center><div class="container"><img src="./images/logo.jpg" width="425" length="425" /></div>';
+    html +=
+        '</center><div class="container"><h1>' +
+        x.first_name +
+        ' ' +
+        x.last_name +
+        '</h1><hr>';
+    html += '<div class="col-lg-3"><h1>' + x.username + ' info</h1><hr>';
     html += '<p>' + x.email + '</p>';
     html += '<p>' + x.city + '</p>';
     html += '<p>' + x.county + '</p>';
-    html += '<p>' + x.home_address + '</p>';
-    html += '<p>' + x.days + '</p>';
-    html += '<p>' + x.username + '</p>';
-    html += '<p>' + x.password_hash + '</p>';
+    html += '<p>' + x.home_address + '</p></div>';
+    html += '<div class="col-lg-4"><h1>Foster Parenting</h1><hr>';
     html +=
-        '<button onclick="FosterParentLogout(' + x.id + ')"> Log out</button>';
+        '<p><button onclick="show_animals("dog")">Foster a dog</button></p>';
+    html +=
+        '<p><button onclick="show_animals("cat")">Foster a cat</button></p>';
+    html +=
+        '<p><button onclick="other_pets()">Foster other pets</button></p></div>';
+    html +=
+        '<div id="foster_pet" class="col-lg-5"><h1> hello world</h1></div></div>';
+    html +=
+        '<div class="container"><div class="col-lg-3"><h1>Foster pet</h1><hr><p>hello world</p>';
+    html += '<button>Unfoster Pet</button></div></div';
     return html;
 }
 //***********************************************************************************************************/
 function main() {
     home();
-    FosterParentSignup();
 }
 
 $(main);
