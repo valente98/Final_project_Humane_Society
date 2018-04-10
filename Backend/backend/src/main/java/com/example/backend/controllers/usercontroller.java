@@ -41,7 +41,7 @@ public class usercontroller {
     @PostMapping("/FosterSignup")
     public  UserSignupCred FosterParentSignUp (@RequestBody signupcred user) throws SQLException{
         String sessionKey = CreateSessionKey();
-        return foster.FosterParent_signup(user.first_name, user.last_name, user.email, user.city, user.county, user.home_address, user.days,
+        return foster.FosterParent_signup(user.first_name, user.last_name, user.email, user.city, user.county, user.home_address,
                 user.username, user.password_hash, sessionKey);
     }
 
@@ -55,7 +55,6 @@ public class usercontroller {
     @CrossOrigin()
     @PostMapping("/FosterLogOut/{id}")
     public boolean FosterLogout(@PathVariable Integer id)throws SQLException{
-        System.out.println(id);
         return foster.FosterParent_logout(id);
     }
 }
