@@ -7,7 +7,6 @@ public class signupcred {
     public String city;
     public String county;
     public String home_address;
-    public Integer days;
     public String username;
     public String password_hash;
     public String sessionKey;
