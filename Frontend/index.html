@@ -230,9 +230,6 @@
                     </p>
                 </div>
                 <div class="col-lg-4">
-                    <p>Amount of Days want to Foster Care:
-                        <input id='days' name='days' typ='text' autocomplete='off' value='' aria-required='true' placeholder='number of days'>
-                    </p>
                     <p>Username:
                         <br>
                         <input id='username' name='username' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Username'>
@@ -254,18 +251,16 @@
                 </div>
                 <h1>Foster Parent Login</h1>
                 <form id="foster-login">
-                    <fieldset>
-                        <div class="form-group">
-                            <input id="Foster-username" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                                placeholder="Username" class="">
-                        </div>
-                        <div class="form-group">
-                            <input id="Foster-password" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                                placeholder="Password" class="">
-                        </div>
-                        <p id="login-error" class="text-danger"></p>
-                        <button class="login-button" type="submit">Login</button>
-                    </fieldset>
+                    <div class="form-group">
+                        <input id="Foster-username" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                            placeholder="Username" class="">
+                    </div>
+                    <div class="form-group">
+                        <input id="Foster-password" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                            placeholder="Password" class="">
+                    </div>
+                    <p id="login-error" class="text-danger"></p>
+                    <button type="submit">Login</button>
                 </form>
             </div>
         </center>
@@ -277,24 +272,23 @@
                     <img src="./images/logo.jpg" width="425" length="425" />
                 </div>
                 <h1>Humane Society Manager Login</h1>
-                <form id="user-info">
-                    <fieldset>
-                        <div class="form-group">
-                            <input id="username-input" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                                placeholder="Username" class="">
-                        </div>
-                        <div class="form-group">
-                            <input id="password-input" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                                placeholder="Password" class="">
-                        </div>
-                        <p id="login-error" class="text-danger"></p>
-                        <button class="login-button" type="submit">Login</button>
-                    </fieldset>
+                <form id="manager-login">
+                    <div class="form-group">
+                        <input id="username-input" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                            placeholder="Username" class="">
+                    </div>
+                    <div class="form-group">
+                        <input id="password-input" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                            placeholder="Password" class="">
+                    </div>
+                    <p id="login-error" class="text-danger"></p>
+                    <button class='manager_login' type="submit">Login</button>
                 </form>
             </div>
         </center>
     </div>
     <div id="manager_page" hidden="true">
+        <button onclick="manager_logout(1)">Log out</button>
         <center>
             <div class="container">
                 <img src="./images/logo.jpg" width="425" length="425" />
