@@ -64,7 +64,6 @@ public class AnimalRepository {
             allAnimal.add(animals);
         }
         preparedStatement.close();
-        System.out.println(allAnimal);
         return allAnimal;
     }
 }

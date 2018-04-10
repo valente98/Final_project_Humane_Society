@@ -1,6 +1,8 @@
 package com.example.backend.Repository;
 
 import java.sql.*;
+
+import com.example.backend.controllers.ManagerCred;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class ManagerRepository {
@@ -32,19 +34,30 @@ public class ManagerRepository {
         }
     }
 
-    public Boolean login(String username, String password) throws SQLException {
+    public boolean Manager_logout(Integer id) throws SQLException {
         Connection conn = JDBCConnect.getDatabase();
-        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from manager WHERE username = ? ");
-        preparedStatement.setString(1, username);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            String hashpassword = resultSet.getString("password_hash");
-            if (hash(password).equals(hashpassword)) {
+        PreparedStatement preparedStatement = conn.prepareStatement(
+                "UPDATE manager SET sessionKey = null WHERE id = ? RETURNING *"
+        );
+        preparedStatement.setInt(1, id);
+        return preparedStatement.execute();
+    }
 
-            }
-        }
-        preparedStatement.close();
-        return false;
+    public ManagerCred login(String username, String password, String sessionKey) throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("UPDATE manager SET sessionKey = ? WHERE username = ? and password_hash = ? returning *");
+        preparedStatement.setString(1, sessionKey);
+        preparedStatement.setString(2, username);
+        preparedStatement.setString(3, hash(password));
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        conn.close();
+        return new ManagerCred(resultSet.getInt("id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("email"),
+                resultSet.getString("sessionKey"));
+
     }
 
     public Boolean Insert_animal(String species, String breed, String name, String male_female,

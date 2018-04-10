@@ -17,26 +17,24 @@ public class FosterParentRepository {
     }
 
     public UserSignupCred FosterParent_signup(String first_name, String last_name, String email, String city, String county, String home_address,
-                                              Integer days, String username, String password_hash, String sessionKey){
+                                              String username, String password_hash, String sessionKey){
         try {
             Connection conn = JDBCConnect.getDatabase();
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO foster_care (first_name, last_name," +
-                    "email, city, county, home_address, days, username, password_hash, sessionKey) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) Returning *");
+                    "email, city, county, home_address, username, password_hash, sessionKey) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) Returning *");
             preparedStatement.setString(1, first_name);
             preparedStatement.setString(2, last_name);
             preparedStatement.setString(3, email);
             preparedStatement.setString(4, city);
             preparedStatement.setString(5, county);
             preparedStatement.setString(6, home_address);
-            preparedStatement.setInt(7, days);
-            preparedStatement.setString(8, username);
+            preparedStatement.setString(7, username);
             String passwordhash = hash(password_hash);
-            preparedStatement.setString(9, passwordhash);
-            preparedStatement.setString(10,sessionKey);
+            preparedStatement.setString(8, passwordhash);
+            preparedStatement.setString(9,sessionKey);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-
             conn.close();
             return new UserSignupCred(resultSet.getInt("id"),
                     resultSet.getString("first_name"),
@@ -45,7 +43,6 @@ public class FosterParentRepository {
                     resultSet.getString("city"),
                     resultSet.getString("county"),
                     resultSet.getString("home_address"),
-                    resultSet.getInt("days"),
                     resultSet.getString("username"),
                     resultSet.getString("password_hash"),
                     resultSet.getString("sessionKey"));
@@ -73,7 +70,6 @@ public class FosterParentRepository {
                 resultSet.getString("city"),
                 resultSet.getString("county"),
                 resultSet.getString("home_address"),
-                resultSet.getInt("days"),
                 resultSet.getString("username"),
                 resultSet.getString("password_hash"),
                 resultSet.getString("sessionKey"));
