@@ -25,6 +25,8 @@ CREATE TABLE manager(
     email text,
     sessionKey text
 );
+INSERT INTO manager(first_name, last_name, username, password_hash, email) 
+values('Valente','Alvarez', 'valvarez12', '$2a$10$n8bYXVib6.SmjQPJRazwk.IGILPXEa1BoZN3z.XkSXxEgJbuZ5f2i', 'valvarez@basecampcodingacademy.org');
 
 CREATE TABLE foster_care(
     id Serial Primary key,
@@ -34,9 +36,9 @@ CREATE TABLE foster_care(
     city text,
     county text,
     home_address text,
-    days numeric,
     username text,
     password_hash text,
+    animal_fostering integer REFERENCES animals(id),
     sessionKey text
 );
 
