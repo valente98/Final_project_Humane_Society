@@ -26,6 +26,18 @@ public class ManagerControler {
         }
         return sessionKey;
     }
+
+    @CrossOrigin()
+    @PostMapping("/insertApplicant")
+    public Boolean insert_applicant(@RequestBody ApplicationCred applicant) throws SQLException {
+        System.out.println(applicant.amount_pets_own);
+        System.out.println(applicant.first_name);
+        System.out.println(applicant.amount_pets_own_past);
+        return manager.Insert_applicant(applicant.first_name, applicant.last_name, applicant.age, applicant.email, applicant.animal_id, applicant.city,
+                applicant.county, applicant.home_address, applicant.ownership_status, applicant.amount_pets_own, applicant.amount_pets_own_past,
+                applicant.animal_living_with_you, applicant.inside_outside, applicant.kept_during_day, applicant.kept_at_night, applicant.surrender_animals_at_us,
+                applicant.adopted_from_us_before, applicant.current_veterinarian_name, applicant.if_no_vet_name_vet_planing, applicant.saw_pet_first);
+    }
     @CrossOrigin()
     @PostMapping("/managerLogin")
     public ManagerCred login(@RequestBody Credentials cred) throws SQLException {
