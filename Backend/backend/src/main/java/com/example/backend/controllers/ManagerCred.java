@@ -7,6 +7,7 @@ public class ManagerCred {
     public String email;
     public String sessionKey;
 
+    public ManagerCred(){}
     public ManagerCred(Integer id, String first_name, String last_name, String email,String sessionKey) {
         this.id = id;
         this.first_name = first_name;
