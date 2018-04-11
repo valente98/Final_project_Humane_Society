@@ -17,8 +17,15 @@ public class usercontroller {
     @PostMapping("/showAnimals")
     public ArrayList pets(@RequestBody SpeciesCred animal) throws SQLException{
         return animals.getanimalbyspecies(animal.animal);
+    }
 
-}
+    @CrossOrigin()
+    @PostMapping("/getAnimalbyId/{id}")
+    public ArrayList animal_id(@PathVariable Integer id) throws SQLException{
+        return animals.getanimalbyid(id);
+    }
+
+
     @CrossOrigin()
     @PostMapping("/otherPets")
     public ArrayList otherPets() throws SQLException{
