@@ -81,6 +81,85 @@ function manager() {
 //*********************************************************************************************************/
 
 //**********this will show the animals and the animals info ***********************************************/
+function modal(x) {
+    var html = '<div id="myModal" class="modal">';
+    html +=
+        '<div class="modal-content"><div class="modal-header"><span class="close" onclick="closemodel()">&times;</span>';
+    html +=
+        '<h1 id="popup_name">' + x.name + '</h1></div><div class="modal-body">';
+    html += '<p>Breed: ' + x.breed + '</p>';
+    html += '<p>M/F: ' + x.male_female + '</p>';
+    html +=
+        '<p>Age: ' +
+        x.age_year +
+        ' year(s)\n\t' +
+        x.age_month +
+        ' month(s)\n\t' +
+        x.age_week +
+        ' week(s)</p>';
+    html += '<p>Size: ' + x.size + '</p>';
+    html += '<p>Color: ' + x.color + '</p>';
+    html += '<p>With us since: ' + x.intake_date + '</p>';
+    html += '<p>Location: ' + x.location + '</p>';
+    html += '<p>House Trained: ' + x.houseTrained + '</p>';
+    html += '<p>Declawed: ' + x.declawed + '</p>';
+    html += '<p>Spayed or Neutured: ' + x.spayed_or_neutured + '</p></div>';
+    html +=
+        '<div class="modal-footer"><button onclick="application(' +
+        x.id +
+        ')">ADOPT</button></div> </div>';
+    return html;
+}
+function application(id) {
+    $('.modal').css('display', 'none');
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', false);
+    $('#application-form').submit(function(event) {
+        console.log($('#amount_pets_own_past').val());
+        event.preventDefault();
+        $.ajax({
+            url: 'http://localhost:8080/insertApplicant',
+            type: 'POST',
+            data: JSON.stringify({
+                first_name: $('#first_name').val(),
+                last_name: $('#last_name').val(),
+                age: $('#age').val(),
+                email: $('#email').val(),
+                animal_id: id,
+                city: $('#city').val(),
+                county: $('#county').val(),
+                home_address: $('#home_address').val(),
+                ownership_status: $('#ownership_status').val(),
+                amount_pets_own: $('#amount_pets_own').val(),
+                amount_pets_own_past: $('#amount_pets_own_past').val(),
+                animal_living_with_you: $('#animal_living_with_you').val(),
+                inside_outside: $('#inside_outside').val(),
+                kept_during_day: $('#kept_during_day').val(),
+                kept_at_night: $('#kept_at_night').val(),
+                surrender_animals_at_us: $('#surrender_animals_at_us').val(),
+                adopted_from_us_before: $('#adopted_from_us_before').val(),
+                current_veterinarian_name: $(
+                    '#current_veterinarian_name'
+                ).val(),
+                if_no_vet_name_vet_planing: $(
+                    '#if_no_vet_name_vet_planning'
+                ).val(),
+                saw_pet_first: $('#saw_pet_first').val()
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        })
+            .then(function handleFeedResponse(response) {
+                $('.submit-button').attr('disabled', true);
+                $('#finish-error').html(
+                    '<p>Your application has been submited!</p><button onclick="home()">HOME</button>'
+                );
+            })
+            .catch(function handleErrorResponse(err) {
+                console.log(err);
+            });
+    });
+}
 function showInfo() {
     $('#myModal').css('display', 'block');
 }
@@ -98,19 +177,38 @@ function animals(x) {
     html += '   ' + x.age_month + ' month(s)<br>    ';
     html +=
         x.age_week +
-        ' week(s)</p><button onclick="showInfo()">View</button></div></center>';
-    $('#popup_name').html(x.name);
+        ' week(s)</p><button onclick="getanimalByid(' +
+        x.id +
+        ')">View</button></div></center>';
     return html;
 }
+function getanimalByid(id) {
+    console.log(id);
+    $.ajax({
+        url: 'http://localhost:8080/getAnimalbyId/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            var animal = response.map(function(y) {
+                return modal(y);
+            });
+            $('#myModal').html(animal);
+            $('.modal').css('display', 'block');
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
 function show_animals(animal) {
-    console.log(animal);
     $('#home').attr('hidden', true);
     $('#application').attr('hidden', true);
     $('#FosterSignup').attr('hidden', true);
     $('#facility_care').attr('hidden', true);
     $('#manager_id').attr('hidden', true);
-
-    console.log(animal);
     $.ajax({
         url: 'http://localhost:8080/showAnimals',
         type: 'POST',
@@ -157,7 +255,11 @@ function other_animals(x) {
     html += '<p>Color: ' + x.color + '</p>';
     html += '<p>Age: ' + x.age_year + ' year(s)<br>';
     html += '   ' + x.age_month + ' month(s)<br>    ';
-    html += x.age_week + ' week(s)</p><button>View</button></div></center>';
+    html +=
+        x.age_week +
+        ' week(s)</p><button onclick="getanimalByid(' +
+        x.id +
+        ')">View</button></div></center>';
     return html;
 }
 function other_pets() {
@@ -191,11 +293,11 @@ function other_pets() {
             console.log(err);
         });
 }
+
 //***********************************************************************************************************/
 
 //**************this is all of the login, signup, and logout for the user and manager ***********************/
 $('#manager-login').submit(function(event) {
-    console.log(event);
     event.preventDefault();
     $.ajax({
         url: 'http://localhost:8080/managerLogin',
@@ -243,7 +345,6 @@ function manager_logout(id) {
 }
 $('#foster-login').submit(function(event) {
     event.preventDefault();
-    console.log($('#Foster-username').val());
     $.ajax({
         url: 'http://localhost:8080/FosterLogin',
         type: 'POST',
@@ -255,10 +356,14 @@ $('#foster-login').submit(function(event) {
         dataType: 'json'
     })
         .then(function handleFeedResponse(response) {
-            console.log(response);
-            FosterPage();
-            var feed = foster_page(response);
-            $('#foster_page').html(feed);
+            if (response) {
+                var feed = foster_page(response);
+                $('#foster_page').html(feed);
+                FosterPage();
+            } else {
+                $('#password-input').val('');
+                $('#login-error').html('Incorrect username or password');
+            }
         })
         .catch(function handleErrorResponse(err) {
             console.log(err);

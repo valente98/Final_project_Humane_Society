@@ -140,21 +140,103 @@
     </div>
     <div id="adoption" hidden="true"></div>
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close" onclick="closemodel()">&times;</span>
-                <h1 id="popup_name"></h1>
-            </div>
-            <div class="modal-body">
-                <p>Some text in the Modal Body</p>
-                <p>Some other text...</p>
-            </div>
-            <div class="modal-footer">
-                <button>ADOPT</button>
-            </div>
-        </div>
     </div>
     <div id="application" hidden="true">
+        <center>
+            <div class="container">
+                <img src="./images/logo.jpg" width="425" length="425" />
+            </div>
+        </center>
+        <div class="container">
+            <h1>APPLICATION</h1>
+            <hr>
+            <form id="application-form">
+                <div class="col-lg-4">
+                    <p>First name:
+                        <br>
+                        <input id='first_name' type='text' autocomplete='off' aria-required='true' placeholder='first name'>
+                    </p>
+                    <p>Last name:
+                        <br>
+                        <input id='last_name' type='text' autocomplete='off' aria-required='true' placeholder='last name'>
+                    </p>
+                    <p>Email Address:
+                        <br>
+                        <input id='email' type='text' autocomplete='off' aria-required='true' placeholder='email'>
+                    </p>
+                    <p>Age:
+                        <br>
+                        <input id="age" type="numeric" autocomplete="off" aria-required="true" placeholder="age">
+                    </p>
+                    <p>City:
+                        <br>
+                        <input id="city" type="numeric" autocomplete="off" aria-required="true" placeholder="City">
+                    </p>
+                    <p>County:
+                        <br>
+                        <input id='county' type='text' autocomplete='off' aria-required='true' placeholder='county'>
+                    </p>
+                    <p>Home Address:
+                        <br>
+                        <input id='home_address' type='text' autocomplete='off' aria-required='true' placeholder='address'>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Ownership Status (rent, own, etc.):
+                        <br>
+                        <input id='ownership_status' type='text' autocomplete='off' aria-required='true' placeholder='status'>
+                    </p>
+                    <p>Number of pets currently own:
+                        <br>
+                        <input id="amount_pets_own" type='numeric' autocomplete="off" aria-required="true" placeholder="pets own">
+                    </p>
+                    <p>Number of pets owned in the past:
+                        <br>
+                        <input id="amount_pets_own_past" type="numeric" autocomplete="off" aria-required="true" placeholder="pets owned">
+                    </p>
+                    <p>Is the animal living with you?:
+                        <br>
+                        <input id='animal_living_with_you' type='boolean' autocomplete='off' aria-required='true' placeholder='true or false'>
+                    </p>
+                    <p>Inside/outside pet:
+                        <br>
+                        <input id='inside_outside' type='text' autocomplete='off' aria-required='true' placeholder='inside or outside'>
+                    </p>
+                    <p>Kept during day:
+                        <br>
+                        <input id='kept_during_day' type='text' autocomplete="off" aria-required="true" placeholder="kept during day">
+                    </p>
+                    <p>Kept at night:
+                        <br>
+                        <input id="kept_at_night" type="text" autocomplete="off" aria-required="true" placeholder="kept at night">
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Have you surrendered an animal to us:
+                        <br>
+                        <input id="surrender_animals_at_us" type="boolean" autocomplete="off" aria-required="true" placeholder="true or false">
+                    </p>
+                    <p>Have you adopted from us before:
+                        <br>
+                        <input id="adopted_from_us_before" type="boolean" autocomplete="off" aria-required="true" placeholder="true or false">
+                    </p>
+                    <p>Current veterinarian name:
+                        <br>
+                        <input id="current_veterinarian_name" type="text" autocomplete="off" aria-required="true" placeholder="name">
+                    </p>
+                    <p>If none. Veterinarian name planning to go:
+                        <br>
+                        <input id="if_no_vet_name_vet_planning" type="text" autocomplete="off" aria-required="true" placeholder="name">
+                    </p>
+                    <p>Where you saw the pet first?:
+                        <br>
+                        <input id="saw_pet_first" type="text" autocomplete="off" aria-required="true" placeholder="seen">
+                    </p>
+                    <button class="submit-button" type="submit">Submit</button>
+                    <div id="finish-error"></div>
+                </div>
+            </form>
+        </div>
     </div>
     <div id="foster_care" hidden="true">
         <center>
