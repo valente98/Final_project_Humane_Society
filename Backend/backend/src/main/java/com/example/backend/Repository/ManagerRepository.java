@@ -59,6 +59,42 @@ public class ManagerRepository {
                 resultSet.getString("sessionKey"));
 
     }
+    public boolean Insert_applicant(String first_name, String last_name, Integer age, String email,
+                                    Integer animal_id, String city, String county, String home_address, String ownership_status,
+                                    Integer amount_pets_own, Integer amount_pets_own_past, Boolean animal_living_with_you,
+                                    String inside_outside, String kept_during_day, String kept_at_night, Boolean surrender_animals_at_us,
+                                    Boolean adopted_from_us_before, String current_veterinarian_name, String if_no_vet_name_vet_planing,
+                                    String saw_pet_first) throws SQLException {
+
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO application(first_name, last_name, age, email, " +
+                "animal_adopting_id, city, county, home_address, ownership_status, amount_pets_own, amount_pets_own_past, animal_living_with_you, " +
+                "inside_outside, kept_during_day, kept_at_night, surrender_animals_at_us, adopted_from_us_before, current_veterinarian_name, " +
+                "if_no_vet_name_vet_planing, saw_pet_first) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        preparedStatement.setString(1, first_name);
+        preparedStatement.setString(2, last_name);
+        preparedStatement.setInt(3, age);
+        preparedStatement.setString(4, email);
+        preparedStatement.setInt(5, animal_id);
+        preparedStatement.setString(6, city);
+        preparedStatement.setString(7, county);
+        preparedStatement.setString(8, home_address);
+        preparedStatement.setString(9, ownership_status);
+        preparedStatement.setInt(10, amount_pets_own);
+        preparedStatement.setInt(11, amount_pets_own_past);
+        preparedStatement.setBoolean(12, animal_living_with_you);
+        preparedStatement.setString(13, inside_outside);
+        preparedStatement.setString(14, kept_during_day);
+        preparedStatement.setString(15, kept_at_night);
+        preparedStatement.setBoolean(16, surrender_animals_at_us);
+        preparedStatement.setBoolean(17, adopted_from_us_before);
+        preparedStatement.setString(18, current_veterinarian_name);
+        preparedStatement.setString(19, if_no_vet_name_vet_planing);
+        preparedStatement.setString(20, saw_pet_first);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+        return true;
+    }
 
     public Boolean Insert_animal(String species, String breed, String name, String male_female,
                               Integer age_year, Integer age_month, Integer age_week, String size,

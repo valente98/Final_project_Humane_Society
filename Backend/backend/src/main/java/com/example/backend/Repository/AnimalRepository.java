@@ -38,6 +38,35 @@ public class AnimalRepository {
         return allAnimal;
     }
 
+    public ArrayList getanimalbyid(Integer id) throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from animals WHERE id = ? ");
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList allAnimal = new ArrayList();
+        while(resultSet.next()){
+            HashMap animals = new HashMap();
+            animals.put("id", resultSet.getString("id"));
+            animals.put("species", resultSet.getString("species"));
+            animals.put("breed", resultSet.getString("breed"));
+            animals.put("name", resultSet.getString("name"));
+            animals.put("male_female", resultSet.getString("male_female"));
+            animals.put("age_year", resultSet.getString("age_year"));
+            animals.put("age_month", resultSet.getString("age_month"));
+            animals.put("age_week", resultSet.getString("age_week"));
+            animals.put("size", resultSet.getString("size"));
+            animals.put("color", resultSet.getString("color"));
+            animals.put("intake_date", resultSet.getString("intake_date"));
+            animals.put("location", resultSet.getString("location"));
+            animals.put("houseTrained", resultSet.getString("houseTrained"));
+            animals.put("declawed", resultSet.getString("declawed"));
+            animals.put("spayed_or_neutured", resultSet.getString("spayed_or_neutured"));
+            allAnimal.add(animals);
+        }
+        preparedStatement.close();
+        return allAnimal;
+    }
+
     public ArrayList getotherPets() throws SQLException {
         Connection conn = JDBCConnect.getDatabase();
         PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from animals Where not(species = 'dog' or species = 'cat')");
