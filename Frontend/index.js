@@ -110,6 +110,43 @@ function modal(x) {
         ')">ADOPT</button></div> </div>';
     return html;
 }
+function modal2(x, user_id) {
+    var html = '<div id="myModal" class="modal">';
+    html +=
+        '<div class="modal-content"><div class="modal-header"><span class="close" onclick="closemodel()">&times;</span>';
+    html +=
+        '<h1 id="popup_name">' + x.name + '</h1></div><div class="modal-body">';
+    html += '<p>Breed: ' + x.breed + '</p>';
+    html += '<p>M/F: ' + x.male_female + '</p>';
+    html +=
+        '<p>Age: ' +
+        x.age_year +
+        ' year(s)\n\t' +
+        x.age_month +
+        ' month(s)\n\t' +
+        x.age_week +
+        ' week(s)</p>';
+    html += '<p>Size: ' + x.size + '</p>';
+    html += '<p>Color: ' + x.color + '</p>';
+    html += '<p>With us since: ' + x.intake_date + '</p>';
+    html += '<p>Location: ' + x.location + '</p>';
+    html += '<p>House Trained: ' + x.houseTrained + '</p>';
+    html += '<p>Declawed: ' + x.declawed + '</p>';
+    html += '<p>Spayed or Neutured: ' + x.spayed_or_neutured + '</p></div>';
+    // html +=
+    //     '<div class="modal-footer"><button onclick="application(' +
+    //     x.id +
+    //     ')">YES THIS PERSON CAN ADOPT</button><button onclick="NoAdoption(' +
+    //     x.id +
+    //     ')">NO THIS PERSON CAN NOT ADOPT</button></div> </div>';
+    html +=
+        '<div class="modal-footer"><button id="' +
+        x.id +
+        ')">YES THIS PERSON CAN ADOPT</button><button onclick="NoAdoption(' +
+        user_id +
+        ')">NO THIS PERSON CAN NOT ADOPT</button></div> </div>';
+    return html;
+}
 function application(id) {
     $('.modal').css('display', 'none');
     $('#adoption').attr('hidden', true);
@@ -195,6 +232,27 @@ function getanimalByid(id) {
             console.log(response);
             var animal = response.map(function(y) {
                 return modal(y);
+            });
+            $('#myModal').html(animal);
+            $('.modal').css('display', 'block');
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function BoolgetanimalByid(id, user_id) {
+    console.log(id);
+    $.ajax({
+        url: 'http://localhost:8080/getAnimalbyId/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            var animal = response.map(function(y) {
+                return modal2(y, user_id);
             });
             $('#myModal').html(animal);
             $('.modal').css('display', 'block');
@@ -473,6 +531,24 @@ function insertAnimal() {
             });
     });
 }
+function NoAdoption(id) {
+    console.log(this);
+    $.ajax({
+        url: 'http://localhost:8080/deleteApplicant/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('#manager_choice').hide(150);
+            $('#manager_choice').html('');
+            GetApplicants();
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
 function AddAnimal() {
     var addAnimal =
         "<center><img src='./images/logo.jpg' width='425' length='425'/></center>";
@@ -527,6 +603,85 @@ function AddAnimal() {
         "<button class='submit-button' type='submit'>add animal</button></form>";
     addAnimal += "<div id='animalMessage'></div>";
     return addAnimal;
+}
+function applicants(x) {
+    var html = '<div class="col-lg-3">';
+    html += '<p>Full Name: ' + x.first_name + ' ' + x.last_name + '</p>';
+    html += '<p>Age: ' + x.age + '</p>';
+    html += '<p>Email: ' + x.email + '</p>';
+    html += '<p>City: ' + x.city + '</p>';
+    html += '<p>County: ' + x.county + '</p>';
+    html += '<p>Home Address: ' + x.home_address + '</p>';
+    html += '<p>Ownership Status: ' + x.ownership_status + '</p>';
+    html += '<p>Number of Pets Own: ' + x.amount_pets_own + '</p>';
+    html +=
+        '<p>Number of Pets Owned in the past: ' +
+        x.amount_pets_own_past +
+        '</p>';
+    html +=
+        '<p>Is the pet living with this person: ' +
+        x.animal_living_with_you +
+        '</p>';
+    html += '<p>Pet will be a : ' + x.inside_outside + ' pet</p>';
+    html +=
+        '<p> Pet will be kept: ' + x.kept_during_day + ' during the day</p>';
+    html += '<p> Pet will be kept: ' + x.kept_at_night + ' at night</p>';
+    html += '<p> Surrender a pet before: ' + x.surrender_animals_at_us + '</p>';
+    html += '<p> Adopted from us: ' + x.adopted_from_us_before + '</p>';
+    html +=
+        '<p> Current Veterinarian name: ' +
+        x.current_veterinarian_name +
+        '</p>';
+    html +=
+        '<p> If no current Vet. Will be planing to visit: ' +
+        x.if_no_vet_name_vet_planing +
+        '</p>';
+    html += '<p> Saw animal first on: ' + x.saw_pet_first + '</p>';
+    html +=
+        '<button onclick="BoolgetanimalByid(' +
+        x.animal_adopting_id +
+        ', ' +
+        x.id +
+        ')">See pet</button><br><br><br><br></div>';
+    return html;
+}
+function GetApplicants() {
+    $.ajax({
+        url: 'http://localhost:8080/getApplicant',
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log('refreshing applicants...' + response.length);
+            // var applicant =
+            //     '<center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Applicants</h1><hr>' +
+            //     response
+            //         .map(function(y) {
+            //             return applicants(y);
+            //         })
+            //         .join('');
+            var applicant =
+                '<div class="row"><div class="col-lg-12"><center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Applicants</h1><hr></div></div>';
+            applicant += '<div class="row">';
+            for (var c = 0; c < response.length; c++) {
+                if (c > 0 && c % 4 == 0) {
+                    // adds row so there is not the funny overlap between the applications
+                    console.log('NEW ROW');
+                    applicant += '</div><div class="row">';
+                }
+                applicant += applicants(response[c]);
+            }
+            applicant += '</div>';
+
+            $('#manager_page').attr('hidden', true);
+            $('#manager_choice').html(applicant);
+            $('#manager_choice').show(150);
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
 }
 function foster_page(x) {
     var html =

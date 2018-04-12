@@ -41,363 +41,361 @@
             </ul>
         </div>
     </nav>
-    <div id="home" hidden="true">
-        <center>
-            <div class="container">
-                <img src="./images/logo.jpg" width="425" length="425" />
-            </div>
-        </center>
-        <div class="container">
-            <h1>ADOPT</h1>
-            <hr>
-            <div class="col-lg-4">
-                <img id="animal" src="./images/dog.jpg" width="250" length="250" />
-                <br>
-                <br>
-                <button onclick="show_animals('dog')">Adopt a dog</button>
-            </div>
-            <div class="col-lg-4">
-                <img id="animal" src="./images/cats.jpeg" width="270" length="270" />
-                <br>
-                <br>
-                <button onclick="show_animals('cat')">Adopt a cat</button>
-            </div>
-            <div class="col-lg-4">
-                <img id="animal" src="./images/otherpets.jpg" width="220" length="220" />
-                <br>
-                <br>
-                <button onclick="other_pets()">Adopt other pets</button>
-            </div>
-        </div>
-        <br>
-        <div class="container">
-            <div class="col-lg-6">
-                <h1>ABOUT US</h1>
-                <hr>
-                <p>
-                    <h1>Providing care for those who can't</h1> Oxford Lafayette Humane Society provides shelter and care to
-                    approximately 4,500 animals each year. In 2011, 4,362 animals were surrendered to OLHS. Of these, 51%
-                    were surrendered as strays, 43% were surrendered by their owners, and 6% were seized by Animal Control.
-                    Each of these animals is surrendered with their own story and requires personalized care to ensure their
-                    well-being. The dedicated shelter staff and volunteers work around the clock every day of the year to
-                    keep all of our animals as comfortable and healthy as possible, with the ultimate goal of finding new,
-                    responsible pet owners to provide loving, permanent homes.
-                    <br>
-                    <br>The Oxford Lafayette Humane Society is a private, nonprofit organization that relies on donations from
-                    our generous supporters, membership dues, and community fundraising. We are not operated or funded by
-                    any national humane groups and must rely on contributions from people like you to bring our services
-                    to the community. Donations made to national animal welfare groups do not benefit our local organization
-                    or our animals. All financial contributions and in-kind donations are tax deductible. </p>
-            </div>
-            <div class="col-lg-6">
-                <h1>Contact / Hours</h1>
-                <hr>
-                <center>
-                    <p>Main Office: (662) 236-7631
-                        <br>Animal Control: (662) 832-7633
-                        <br>Adoptions: (662) 801-6788
-                        <br>
-                        <h1> Lafayette Humane Society</h1>
-                        <br> 413 McElroy Drive, Oxford, MS 38655, US
-                        <br>
-                        <h1>Hours</h1>
-                        <br>Monday: 12-5 pm
-                        <br>Tuesday: 12-5 pm
-                        <br>Wednesday: Closed
-                        <br>Thursday: 12-5 pm
-                        <br>Friday: 12-5 pm
-                        <br>Saturday: 12-5 pm
-                        <br>Sunday: Closed
-                    </p>
-                </center>
-            </div>
-        </div>
-        <div class="container">
-            <h1>FOLLOW US</h1>
-            <hr>
-            <div class="col-lg-4">
-                <center>
-                    <a href="https://www.facebook.com/oxfordlafayettehumanesociety">
-                        <i class="fa fa-facebook-official fa-huge" aria-hidden="true"></i>
-                    </a>
-                </center>
-            </div>
-            <div class="col-lg-4">
-                <center>
-                    <a href="https://twitter.com/OLHS">
-                        <i class="fa fa-twitter-square fa-huge" aria-hidden="true"></i>
-                    </a>
-                </center>
-            </div>
-            <div class="col-lg-4">
-                <center>
-                    <a href="https://www.instagram.com/oxfordpets/">
-                        <i class="fa fa-instagram fa-huge" aria-hidden="true"></i>
-                    </a>
-                </center>
-            </div>
-        </div>
-    </div>
-    <div id="adoption" hidden="true"></div>
-    <div id="myModal" class="modal">
-    </div>
-    <div id="application" hidden="true">
-        <center>
-            <div class="container">
-                <img src="./images/logo.jpg" width="425" length="425" />
-            </div>
-        </center>
-        <div class="container">
-            <h1>APPLICATION</h1>
-            <hr>
-            <form id="application-form">
-                <div class="col-lg-4">
-                    <p>First name:
-                        <br>
-                        <input id='first_name' type='text' autocomplete='off' aria-required='true' placeholder='first name'>
-                    </p>
-                    <p>Last name:
-                        <br>
-                        <input id='last_name' type='text' autocomplete='off' aria-required='true' placeholder='last name'>
-                    </p>
-                    <p>Email Address:
-                        <br>
-                        <input id='email' type='text' autocomplete='off' aria-required='true' placeholder='email'>
-                    </p>
-                    <p>Age:
-                        <br>
-                        <input id="age" type="numeric" autocomplete="off" aria-required="true" placeholder="age">
-                    </p>
-                    <p>City:
-                        <br>
-                        <input id="city" type="numeric" autocomplete="off" aria-required="true" placeholder="City">
-                    </p>
-                    <p>County:
-                        <br>
-                        <input id='county' type='text' autocomplete='off' aria-required='true' placeholder='county'>
-                    </p>
-                    <p>Home Address:
-                        <br>
-                        <input id='home_address' type='text' autocomplete='off' aria-required='true' placeholder='address'>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Ownership Status (rent, own, etc.):
-                        <br>
-                        <input id='ownership_status' type='text' autocomplete='off' aria-required='true' placeholder='status'>
-                    </p>
-                    <p>Number of pets currently own:
-                        <br>
-                        <input id="amount_pets_own" type='numeric' autocomplete="off" aria-required="true" placeholder="pets own">
-                    </p>
-                    <p>Number of pets owned in the past:
-                        <br>
-                        <input id="amount_pets_own_past" type="numeric" autocomplete="off" aria-required="true" placeholder="pets owned">
-                    </p>
-                    <p>Is the animal living with you?:
-                        <br>
-                        <input id='animal_living_with_you' type='boolean' autocomplete='off' aria-required='true' placeholder='true or false'>
-                    </p>
-                    <p>Inside/outside pet:
-                        <br>
-                        <input id='inside_outside' type='text' autocomplete='off' aria-required='true' placeholder='inside or outside'>
-                    </p>
-                    <p>Kept during day:
-                        <br>
-                        <input id='kept_during_day' type='text' autocomplete="off" aria-required="true" placeholder="kept during day">
-                    </p>
-                    <p>Kept at night:
-                        <br>
-                        <input id="kept_at_night" type="text" autocomplete="off" aria-required="true" placeholder="kept at night">
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Have you surrendered an animal to us:
-                        <br>
-                        <input id="surrender_animals_at_us" type="boolean" autocomplete="off" aria-required="true" placeholder="true or false">
-                    </p>
-                    <p>Have you adopted from us before:
-                        <br>
-                        <input id="adopted_from_us_before" type="boolean" autocomplete="off" aria-required="true" placeholder="true or false">
-                    </p>
-                    <p>Current veterinarian name:
-                        <br>
-                        <input id="current_veterinarian_name" type="text" autocomplete="off" aria-required="true" placeholder="name">
-                    </p>
-                    <p>If none. Veterinarian name planning to go:
-                        <br>
-                        <input id="if_no_vet_name_vet_planning" type="text" autocomplete="off" aria-required="true" placeholder="name">
-                    </p>
-                    <p>Where you saw the pet first?:
-                        <br>
-                        <input id="saw_pet_first" type="text" autocomplete="off" aria-required="true" placeholder="seen">
-                    </p>
-                    <button class="submit-button" type="submit">Submit</button>
-                    <div id="finish-error"></div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div id="foster_care" hidden="true">
-        <center>
-            <div class="container">
-                <img src="./images/logo.jpg" width="425" length="425" />
-            </div>
-        </center>
-        <div class="container">
-            <h1>FOSTER CARE VOLUNTEER</h1>
-            <hr>
-            <br>
-            <br>
-            <div class='col-lg-8'>
-                <h1>It's easy and fun!</h1>
-                <hr>
-                <p>Please help us provide alternatives to euthanasia by being a foster family. Foster families help
-                    <br>us by providing temporary homes to adoptable pets when we are overcapacity or when the pet
-                    <br>needs a little extra TLC or socialization. Foster families also help us by promoting their foster
-                    <br> pets for adoption with their friends and social media network.
-                    <br>
-                    <br> Please consider this very important and life-saving mission of fostering!
-                    <br>
-                    <br>(The foster application is the same as the adoption application.)
-                </p>
-            </div>
-            <div class='col-lg-4'>
-                <h1>Sign up!</h1>
-                <hr>
-                <p>By signing up you will be ask to fill out an application that will need to be submited. After you have submited
-                    the application it will be review by our manager. If you get accepted you can login as a member there
-                    you will be giving information of what you are needed to do.
-                </p>
-                <button onclick="FosterSignup()">SIGN UP</button>
-            </div>
-        </div>
-    </div>
-    <div id="FosterSignup" hidden="true">
-        <center>
-            <div class="container">
-                <img src="./images/logo.jpg" width="425" length="425" />
-            </div>
-        </center>
-        <div class="container">
-            <h1>FOSTER PARENT SIGN UP FORM</h1>
-            <hr>
-            <form id="foster-signup">
-                <div class="col-lg-4">
-                    <p>First name:
-                        <br>
-                        <input id='first_name' name='first_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='first name'>
-                    </p>
-                    <p>Last name:
-                        <br>
-                        <input id='last_name' name='last_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='last name'>
-                    </p>
-                    <p>Email Address:
-                        <br>
-                        <input id='email' name='email' typ='text' autocomplete='off' value='' aria-required='true' placeholder='email'>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>City:
-                        <br>
-                        <input id='city' name='city' typ='text' autocomplete='off' value='' aria-required='true' placeholder='city'>
-                    </p>
-                    <p>County:
-                        <br>
-                        <input id='county' name='county' typ='text' autocomplete='off' value='' aria-required='true' placeholder='county'>
-                    </p>
-                    <p>Home Address:
-                        <br>
-                        <input id='home_address' name='home_address' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Address'>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Username:
-                        <br>
-                        <input id='username' name='username' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Username'>
-                    </p>
-                    <p>Password:
-                        <br>
-                        <input id='password' name='password' typ='text' autocomplete='off' value='' aria-required='true' placeholder='password'>
-                    </p>
-                    <button class="singup-button" type="submit">SIGN UP</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div id="FosterLogin" hidden="true">
-        <center>
-            <div id="container">
+    <div class="container">
+        <div id="home" hidden="true">
+            <center>
                 <div class="container">
                     <img src="./images/logo.jpg" width="425" length="425" />
                 </div>
-                <h1>Foster Parent Login</h1>
-                <form id="foster-login">
-                    <div class="form-group">
-                        <input id="Foster-username" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                            placeholder="Username" class="">
-                    </div>
-                    <div class="form-group">
-                        <input id="Foster-password" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                            placeholder="Password" class="">
-                    </div>
-                    <p id="login-error" class="text-danger"></p>
-                    <button type="submit">Login</button>
-                </form>
+            </center>
+            <div class="container">
+                <h1>ADOPT</h1>
+                <hr>
+                <div class="col-lg-4">
+                    <img id="animal" src="./images/dog.jpg" width="250" length="250" />
+                    <br>
+                    <br>
+                    <button onclick="show_animals('dog')">Adopt a dog</button>
+                </div>
+                <div class="col-lg-4">
+                    <img id="animal" src="./images/cats.jpeg" width="270" length="270" />
+                    <br>
+                    <br>
+                    <button onclick="show_animals('cat')">Adopt a cat</button>
+                </div>
+                <div class="col-lg-4">
+                    <img id="animal" src="./images/otherpets.jpg" width="220" length="220" />
+                    <br>
+                    <br>
+                    <button onclick="other_pets()">Adopt other pets</button>
+                </div>
             </div>
-        </center>
-    </div>
-    <div id="manager_id" hidden='true'>
-        <center>
-            <div id="container">
+            <br>
+            <div class="container">
+                <div class="col-lg-6">
+                    <h1>ABOUT US</h1>
+                    <hr>
+                    <p>
+                        <h1>Providing care for those who can't</h1> Oxford Lafayette Humane Society provides shelter and care
+                        to approximately 4,500 animals each year. In 2011, 4,362 animals were surrendered to OLHS. Of these,
+                        51% were surrendered as strays, 43% were surrendered by their owners, and 6% were seized by Animal
+                        Control. Each of these animals is surrendered with their own story and requires personalized care
+                        to ensure their well-being. The dedicated shelter staff and volunteers work around the clock every
+                        day of the year to keep all of our animals as comfortable and healthy as possible, with the ultimate
+                        goal of finding new, responsible pet owners to provide loving, permanent homes.
+                        <br>
+                        <br>The Oxford Lafayette Humane Society is a private, nonprofit organization that relies on donations
+                        from our generous supporters, membership dues, and community fundraising. We are not operated or
+                        funded by any national humane groups and must rely on contributions from people like you to bring
+                        our services to the community. Donations made to national animal welfare groups do not benefit our
+                        local organization or our animals. All financial contributions and in-kind donations are tax deductible.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <h1>Contact / Hours</h1>
+                    <hr>
+                    <center>
+                        <p>Main Office: (662) 236-7631
+                            <br>Animal Control: (662) 832-7633
+                            <br>Adoptions: (662) 801-6788
+                            <br>
+                            <h1> Lafayette Humane Society</h1>
+                            <br> 413 McElroy Drive, Oxford, MS 38655, US
+                            <br>
+                            <h1>Hours</h1>
+                            <br>Monday: 12-5 pm
+                            <br>Tuesday: 12-5 pm
+                            <br>Wednesday: Closed
+                            <br>Thursday: 12-5 pm
+                            <br>Friday: 12-5 pm
+                            <br>Saturday: 12-5 pm
+                            <br>Sunday: Closed
+                        </p>
+                    </center>
+                </div>
+            </div>
+            <div class="container">
+                <h1>FOLLOW US</h1>
+                <hr>
+                <div class="col-lg-4">
+                    <center>
+                        <a href="https://www.facebook.com/oxfordlafayettehumanesociety">
+                            <i class="fa fa-facebook-official fa-huge" aria-hidden="true"></i>
+                        </a>
+                    </center>
+                </div>
+                <div class="col-lg-4">
+                    <center>
+                        <a href="https://twitter.com/OLHS">
+                            <i class="fa fa-twitter-square fa-huge" aria-hidden="true"></i>
+                        </a>
+                    </center>
+                </div>
+                <div class="col-lg-4">
+                    <center>
+                        <a href="https://www.instagram.com/oxfordpets/">
+                            <i class="fa fa-instagram fa-huge" aria-hidden="true"></i>
+                        </a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div id="adoption" hidden="true"></div>
+        <div id="myModal" class="modal">
+        </div>
+        <div id="application" hidden="true">
+            <center>
                 <div class="container">
                     <img src="./images/logo.jpg" width="425" length="425" />
                 </div>
-                <h1>Humane Society Manager Login</h1>
-                <form id="manager-login">
-                    <div class="form-group">
-                        <input id="username-input" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                            placeholder="Username" class="">
+            </center>
+            <div class="container">
+                <h1>APPLICATION</h1>
+                <hr>
+                <form id="application-form">
+                    <div class="col-lg-4">
+                        <p>First name:
+                            <br>
+                            <input id='first_name' type='text' autocomplete='off' aria-required='true' placeholder='first name'>
+                        </p>
+                        <p>Last name:
+                            <br>
+                            <input id='last_name' type='text' autocomplete='off' aria-required='true' placeholder='last name'>
+                        </p>
+                        <p>Email Address:
+                            <br>
+                            <input id='email' type='text' autocomplete='off' aria-required='true' placeholder='email'>
+                        </p>
+                        <p>Age:
+                            <br>
+                            <input id="age" type="numeric" autocomplete="off" aria-required="true" placeholder="age">
+                        </p>
+                        <p>City:
+                            <br>
+                            <input id="city" type="numeric" autocomplete="off" aria-required="true" placeholder="City">
+                        </p>
+                        <p>County:
+                            <br>
+                            <input id='county' type='text' autocomplete='off' aria-required='true' placeholder='county'>
+                        </p>
+                        <p>Home Address:
+                            <br>
+                            <input id='home_address' type='text' autocomplete='off' aria-required='true' placeholder='address'>
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <input id="password-input" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
-                            placeholder="Password" class="">
+                    <div class="col-lg-4">
+                        <p>Ownership Status (rent, own, etc.):
+                            <br>
+                            <input id='ownership_status' type='text' autocomplete='off' aria-required='true' placeholder='status'>
+                        </p>
+                        <p>Number of pets currently own:
+                            <br>
+                            <input id="amount_pets_own" type='numeric' autocomplete="off" aria-required="true" placeholder="pets own">
+                        </p>
+                        <p>Number of pets owned in the past:
+                            <br>
+                            <input id="amount_pets_own_past" type="numeric" autocomplete="off" aria-required="true" placeholder="pets owned">
+                        </p>
+                        <p>Is the animal living with you?:
+                            <br>
+                            <input id='animal_living_with_you' type='boolean' autocomplete='off' aria-required='true' placeholder='true or false'>
+                        </p>
+                        <p>Inside/outside pet:
+                            <br>
+                            <input id='inside_outside' type='text' autocomplete='off' aria-required='true' placeholder='inside or outside'>
+                        </p>
+                        <p>Kept during day:
+                            <br>
+                            <input id='kept_during_day' type='text' autocomplete="off" aria-required="true" placeholder="kept during day">
+                        </p>
+                        <p>Kept at night:
+                            <br>
+                            <input id="kept_at_night" type="text" autocomplete="off" aria-required="true" placeholder="kept at night">
+                        </p>
                     </div>
-                    <p id="login-error" class="text-danger"></p>
-                    <button class='manager_login' type="submit">Login</button>
+                    <div class="col-lg-4">
+                        <p>Have you surrendered an animal to us:
+                            <br>
+                            <input id="surrender_animals_at_us" type="boolean" autocomplete="off" aria-required="true" placeholder="true or false">
+                        </p>
+                        <p>Have you adopted from us before:
+                            <br>
+                            <input id="adopted_from_us_before" type="boolean" autocomplete="off" aria-required="true" placeholder="true or false">
+                        </p>
+                        <p>Current veterinarian name:
+                            <br>
+                            <input id="current_veterinarian_name" type="text" autocomplete="off" aria-required="true" placeholder="name">
+                        </p>
+                        <p>If none. Veterinarian name planning to go:
+                            <br>
+                            <input id="if_no_vet_name_vet_planning" type="text" autocomplete="off" aria-required="true" placeholder="name">
+                        </p>
+                        <p>Where you saw the pet first?:
+                            <br>
+                            <input id="saw_pet_first" type="text" autocomplete="off" aria-required="true" placeholder="seen">
+                        </p>
+                        <button class="submit-button" type="submit">Submit</button>
+                        <div id="finish-error"></div>
+                    </div>
                 </form>
             </div>
-        </center>
-    </div>
-    <div id="manager_page" hidden="true">
-        <button onclick="manager_logout(1)">Log out</button>
-        <center>
+        </div>
+        <div id="foster_care" hidden="true">
+            <center>
+                <div class="container">
+                    <img src="./images/logo.jpg" width="425" length="425" />
+                </div>
+            </center>
             <div class="container">
-                <img src="./images/logo.jpg" width="425" length="425" />
-            </div>
-        </center>
-        <div class="container">
-            <h1>WELCOME</h1>
-            <hr>
-            <div class="col-lg-3">
-                <button onclick="insertAnimal()">ADD
-                    <br> ANIMAL</button>
-            </div>
-            <div class="col-lg-3">
-                <button>DELETE
-                    <br>ANIMAL
-                </button>
-            </div>
-            <div class="col-lg-3">
-                <button>FOSTER APPLICANTS</button>
-            </div>
-            <div class="col-lg-3">
-                <button>ADOPTION APPLICANTS</button>
+                <h1>FOSTER CARE VOLUNTEER</h1>
+                <hr>
+                <br>
+                <br>
+                <div class='col-lg-8'>
+                    <h1>It's easy and fun!</h1>
+                    <hr>
+                    <p>Please help us provide alternatives to euthanasia by being a foster family. Foster families help
+                        <br>us by providing temporary homes to adoptable pets when we are overcapacity or when the pet
+                        <br>needs a little extra TLC or socialization. Foster families also help us by promoting their foster
+                        <br> pets for adoption with their friends and social media network.
+                        <br>
+                        <br> Please consider this very important and life-saving mission of fostering!
+                        <br>
+                        <br>(The foster application is the same as the adoption application.)
+                    </p>
+                </div>
+                <div class='col-lg-4'>
+                    <h1>Sign up!</h1>
+                    <hr>
+                    <p>By signing up you will be ask to fill out an application that will need to be submited. After you have
+                        submited the application it will be review by our manager. If you get accepted you can login as a
+                        member there you will be giving information of what you are needed to do.
+                    </p>
+                    <button onclick="FosterSignup()">SIGN UP</button>
+                </div>
             </div>
         </div>
+        <div id="FosterSignup" hidden="true">
+            <center>
+                <div class="container">
+                    <img src="./images/logo.jpg" width="425" length="425" />
+                </div>
+            </center>
+            <div class="container">
+                <h1>FOSTER PARENT SIGN UP FORM</h1>
+                <hr>
+                <form id="foster-signup">
+                    <div class="col-lg-4">
+                        <p>First name:
+                            <br>
+                            <input id='first_name' name='first_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='first name'>
+                        </p>
+                        <p>Last name:
+                            <br>
+                            <input id='last_name' name='last_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='last name'>
+                        </p>
+                        <p>Email Address:
+                            <br>
+                            <input id='email' name='email' typ='text' autocomplete='off' value='' aria-required='true' placeholder='email'>
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <p>City:
+                            <br>
+                            <input id='city' name='city' typ='text' autocomplete='off' value='' aria-required='true' placeholder='city'>
+                        </p>
+                        <p>County:
+                            <br>
+                            <input id='county' name='county' typ='text' autocomplete='off' value='' aria-required='true' placeholder='county'>
+                        </p>
+                        <p>Home Address:
+                            <br>
+                            <input id='home_address' name='home_address' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Address'>
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <p>Username:
+                            <br>
+                            <input id='username' name='username' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Username'>
+                        </p>
+                        <p>Password:
+                            <br>
+                            <input id='password' name='password' typ='text' autocomplete='off' value='' aria-required='true' placeholder='password'>
+                        </p>
+                        <button class="singup-button" type="submit">SIGN UP</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="FosterLogin" hidden="true">
+            <center>
+                <div id="container">
+                    <div class="container">
+                        <img src="./images/logo.jpg" width="425" length="425" />
+                    </div>
+                    <h1>Foster Parent Login</h1>
+                    <form id="foster-login">
+                        <div class="form-group">
+                            <input id="Foster-username" type="text" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                                placeholder="Username" class="">
+                        </div>
+                        <div class="form-group">
+                            <input id="Foster-password" type="password" autocomplete="off" value="" name="user[name]" maxlength="40" aria-required="true"
+                                placeholder="Password" class="">
+                        </div>
+                        <p id="login-error" class="text-danger"></p>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </center>
+        </div>
+        <div id="manager_id" hidden='true'>
+            <center>
+                <div id="container">
+                    <div class="container">
+                        <img src="./images/logo.jpg" width="425" length="425" />
+                    </div>
+                    <h1>Humane Society Manager Login</h1>
+                    <form id="manager-login">
+                        <div class="form-group">
+                            <input id="username-input" type="text" autocomplete="off" value="valvarez12" name="user[name]" maxlength="40" aria-required="true"
+                                placeholder="Username" class="">
+                        </div>
+                        <div class="form-group">
+                            <input id="password-input" type="password" autocomplete="off" value="hslohs#21" name="user[name]" maxlength="40" aria-required="true"
+                                placeholder="Password" class="">
+                        </div>
+                        <p id="login-error" class="text-danger"></p>
+                        <button class='manager_login' type="submit">Login</button>
+                    </form>
+                </div>
+            </center>
+        </div>
+        <div id="manager_page" hidden="true">
+            <button onclick="manager_logout(1)">Log out</button>
+            <center>
+                <div class="container">
+                    <img src="./images/logo.jpg" width="425" length="425" />
+                </div>
+            </center>
+            <div class="container">
+                <h1>WELCOME</h1>
+                <hr>
+                <div class="col-lg-3">
+                    <button onclick="insertAnimal()">ADD
+                        <br> ANIMAL</button>
+                </div>
+                <div class="col-lg-3">
+                    <button>FOSTER APPLICANTS</button>
+                </div>
+                <div class="col-lg-3">
+                    <button onclick="GetApplicants()">ADOPTION APPLICANTS</button>
+                </div>
+            </div>
+        </div>
+        <div id="manager_choice" hidden="true"></div>
+        <div id="foster_page" hidden="true"></div>
     </div>
-    <div id="manager_choice" hidden="true"></div>
-    <div id="foster_page" hidden="true"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
