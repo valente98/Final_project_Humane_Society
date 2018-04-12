@@ -1,6 +1,8 @@
 package com.example.backend.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.example.backend.controllers.ManagerCred;
 import org.mindrot.jbcrypt.BCrypt;
@@ -42,7 +44,48 @@ public class ManagerRepository {
         preparedStatement.setInt(1, id);
         return preparedStatement.execute();
     }
+    public boolean Delete_application(Integer id) throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement(
+                "DELETE FROM application where id =?"
+        );
+        preparedStatement.setInt(1, id);
+        return preparedStatement.execute();
+    }
+    public ArrayList getapplicants() throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from application");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList Applicants = new ArrayList();
+        while (resultSet.next()) {
+            HashMap applicant = new HashMap();
+            applicant.put("id", resultSet.getInt("id"));
+            applicant.put("first_name", resultSet.getString("first_name"));
+            applicant.put("last_name", resultSet.getString("last_name"));
+            applicant.put("age", resultSet.getInt("age"));
+            applicant.put("email", resultSet.getString("email"));
+            applicant.put("animal_adopting_id", resultSet.getInt("animal_adopting_id"));
+            applicant.put("city", resultSet.getString("city"));
+            applicant.put("county", resultSet.getString("county"));
+            applicant.put("home_address", resultSet.getString("home_address"));
+            applicant.put("ownership_status", resultSet.getString("ownership_status"));
+            applicant.put("amount_pets_own", resultSet.getInt("amount_pets_own"));
+            applicant.put("amount_pets_own_past", resultSet.getInt("amount_pets_own_past"));
+            applicant.put("animal_living_with_you", resultSet.getBoolean("animal_living_with_you"));
+            applicant.put("inside_outside", resultSet.getString("inside_outside"));
+            applicant.put("kept_during_day", resultSet.getString("kept_during_day"));
+            applicant.put("kept_at_night", resultSet.getString("kept_at_night"));
+            applicant.put("surrender_animals_at_us", resultSet.getBoolean("surrender_animals_at_us"));
+            applicant.put("adopted_from_us_before", resultSet.getBoolean("adopted_from_us_before"));
+            applicant.put("current_veterinarian_name", resultSet.getString("current_veterinarian_name"));
+            applicant.put("if_no_vet_name_vet_planing", resultSet.getString("if_no_vet_name_vet_planing"));
+            applicant.put("saw_pet_first", resultSet.getString("saw_pet_first"));
 
+            Applicants.add(applicant);
+        }
+        preparedStatement.close();
+        return Applicants;
+    }
     public ManagerCred login(String username, String password, String sessionKey) throws SQLException {
         Connection conn = JDBCConnect.getDatabase();
         PreparedStatement preparedStatement = conn.prepareStatement("UPDATE manager SET sessionKey = ? WHERE username = ? and password_hash = ? returning *");
@@ -95,7 +138,6 @@ public class ManagerRepository {
         preparedStatement.close();
         return true;
     }
-
     public Boolean Insert_animal(String species, String breed, String name, String male_female,
                               Integer age_year, Integer age_month, Integer age_week, String size,
                               String color, Date intake_date, String location, Boolean houseTrained,
