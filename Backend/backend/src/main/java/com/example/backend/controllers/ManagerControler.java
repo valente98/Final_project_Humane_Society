@@ -4,6 +4,7 @@ import com.example.backend.Repository.ManagerRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 
 @RestController
@@ -26,13 +27,14 @@ public class ManagerControler {
         }
         return sessionKey;
     }
-
     @CrossOrigin()
+    @PostMapping("/getApplicant")
+    public ArrayList getApplicant() throws SQLException {
+        return manager.getapplicants();
+    }
+        @CrossOrigin()
     @PostMapping("/insertApplicant")
     public Boolean insert_applicant(@RequestBody ApplicationCred applicant) throws SQLException {
-        System.out.println(applicant.amount_pets_own);
-        System.out.println(applicant.first_name);
-        System.out.println(applicant.amount_pets_own_past);
         return manager.Insert_applicant(applicant.first_name, applicant.last_name, applicant.age, applicant.email, applicant.animal_id, applicant.city,
                 applicant.county, applicant.home_address, applicant.ownership_status, applicant.amount_pets_own, applicant.amount_pets_own_past,
                 applicant.animal_living_with_you, applicant.inside_outside, applicant.kept_during_day, applicant.kept_at_night, applicant.surrender_animals_at_us,
@@ -43,6 +45,12 @@ public class ManagerControler {
     public ManagerCred login(@RequestBody Credentials cred) throws SQLException {
         String sessionKey= CreateSessionKey();
         return manager.login(cred.username, cred.password, sessionKey);
+    }
+
+    @CrossOrigin()
+    @PostMapping("/deleteApplicant/{id}")
+    public boolean deleteApplicant(@PathVariable Integer id)throws SQLException{
+        return manager.Delete_application(id);
     }
 
     @CrossOrigin()
