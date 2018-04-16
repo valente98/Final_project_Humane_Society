@@ -52,6 +52,23 @@ public class ManagerRepository {
         preparedStatement.setInt(1, id);
         return preparedStatement.execute();
     }
+    public boolean Delete__pet_because_it_is_adopted(Integer id) throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement(
+                "DELETE FROM animals where id =?"
+        );
+        preparedStatement.setInt(1, id);
+        return preparedStatement.execute();
+    }
+
+    public boolean Delete_Applicant_with_Same_adopting_pet(Integer id) throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement(
+                "DELETE FROM application where animal_adopting_id =?"
+        );
+        preparedStatement.setInt(1, id);
+        return preparedStatement.execute();
+    }
     public ArrayList getapplicants() throws SQLException {
         Connection conn = JDBCConnect.getDatabase();
         PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from application");
@@ -142,7 +159,6 @@ public class ManagerRepository {
                               Integer age_year, Integer age_month, Integer age_week, String size,
                               String color, Date intake_date, String location, Boolean houseTrained,
                               Boolean declawed, Boolean spayed_or_neutured) throws SQLException {
-        System.out.println(spayed_or_neutured);
         Connection conn = JDBCConnect.getDatabase();
         PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO animals(species, breed, name, male_female," +
                 "age_year, age_month, age_week, size, color, intake_date, location, houseTrained, declawed, spayed_or_neutured) Values(" +
