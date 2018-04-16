@@ -12,9 +12,9 @@ public class ManagerControler {
     ManagerRepository manager = new ManagerRepository();
     @CrossOrigin()
     @PostMapping("/insertManager")
-    public void inset_manager(@RequestBody Credentials cred)throws SQLException{
+    public void insert_manager(@RequestBody UserLoginCred cred)throws SQLException{
         String sessionKey= CreateSessionKey();
-        manager.insert_manager(cred.username, cred.password, sessionKey);
+        manager.insert_manager(cred.username, cred.password_hash, sessionKey);
     }
     String CreateSessionKey(){
         String alphabet= "abcdefghijklmonpqrstuvwxyz0123456789!@#$%^&*(){}[]?.";
@@ -42,15 +42,23 @@ public class ManagerControler {
     }
     @CrossOrigin()
     @PostMapping("/managerLogin")
-    public ManagerCred login(@RequestBody Credentials cred) throws SQLException {
+    public ManagerCred login(@RequestBody UserLoginCred cred) throws SQLException {
         String sessionKey= CreateSessionKey();
-        return manager.login(cred.username, cred.password, sessionKey);
+        return manager.login(cred.username, cred.password_hash, sessionKey);
     }
 
     @CrossOrigin()
     @PostMapping("/deleteApplicant/{id}")
     public boolean deleteApplicant(@PathVariable Integer id)throws SQLException{
         return manager.Delete_application(id);
+    }
+
+    @CrossOrigin()
+    @PostMapping("/deleteApplicantsandPet/{id}")
+    public boolean deleteApplicantsandPet(@PathVariable Integer id)throws SQLException{
+        manager.Delete__pet_because_it_is_adopted(id);
+        manager.Delete_Applicant_with_Same_adopting_pet(id);
+        return  manager.Delete_Applicant_with_Same_adopting_pet(id);
     }
 
     @CrossOrigin()
