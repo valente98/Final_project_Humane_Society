@@ -140,7 +140,7 @@ function modal2(x, user_id) {
     //     x.id +
     //     ')">NO THIS PERSON CAN NOT ADOPT</button></div> </div>';
     html +=
-        '<div class="modal-footer"><button id="' +
+        '<div class="modal-footer"><button onclick="YesAdoption(' +
         x.id +
         ')">YES THIS PERSON CAN ADOPT</button><button onclick="NoAdoption(' +
         user_id +
@@ -151,52 +151,53 @@ function application(id) {
     $('.modal').css('display', 'none');
     $('#adoption').attr('hidden', true);
     $('#application').attr('hidden', false);
-    $('#application-form').submit(function(event) {
-        console.log($('#amount_pets_own_past').val());
-        event.preventDefault();
-        $.ajax({
-            url: 'http://localhost:8080/insertApplicant',
-            type: 'POST',
-            data: JSON.stringify({
-                first_name: $('#first_name').val(),
-                last_name: $('#last_name').val(),
-                age: $('#age').val(),
-                email: $('#email').val(),
-                animal_id: id,
-                city: $('#city').val(),
-                county: $('#county').val(),
-                home_address: $('#home_address').val(),
-                ownership_status: $('#ownership_status').val(),
-                amount_pets_own: $('#amount_pets_own').val(),
-                amount_pets_own_past: $('#amount_pets_own_past').val(),
-                animal_living_with_you: $('#animal_living_with_you').val(),
-                inside_outside: $('#inside_outside').val(),
-                kept_during_day: $('#kept_during_day').val(),
-                kept_at_night: $('#kept_at_night').val(),
-                surrender_animals_at_us: $('#surrender_animals_at_us').val(),
-                adopted_from_us_before: $('#adopted_from_us_before').val(),
-                current_veterinarian_name: $(
-                    '#current_veterinarian_name'
-                ).val(),
-                if_no_vet_name_vet_planing: $(
-                    '#if_no_vet_name_vet_planning'
-                ).val(),
-                saw_pet_first: $('#saw_pet_first').val()
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
-        })
-            .then(function handleFeedResponse(response) {
-                $('.submit-button').attr('disabled', true);
-                $('#finish-error').html(
-                    '<p>Your application has been submited!</p><button onclick="home()">HOME</button>'
-                );
-            })
-            .catch(function handleErrorResponse(err) {
-                console.log(err);
-            });
-    });
+    $('#animal_id').html(id);
 }
+$('#application-form').submit(function(event) {
+    event.preventDefault();
+    $('#animal_id').attr('hidden', false);
+    console.log($('#animal_id').html());
+    $.ajax({
+        url: 'http://localhost:8080/insertApplicant',
+        type: 'POST',
+        data: JSON.stringify({
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            age: $('#age').val(),
+            email: $('#email').val(),
+            animal_id: $('#animal_id').html(),
+            city: $('#city').val(),
+            county: $('#county').val(),
+            home_address: $('#home_address').val(),
+            ownership_status: $('#ownership_status').val(),
+            amount_pets_own: $('#amount_pets_own').val(),
+            amount_pets_own_past: $('#amount_pets_own_past').val(),
+            animal_living_with_you: $('#animal_living_with_you').val(),
+            inside_outside: $('#inside_outside').val(),
+            kept_during_day: $('#kept_during_day').val(),
+            kept_at_night: $('#kept_at_night').val(),
+            surrender_animals_at_us: $('#surrender_animals_at_us').val(),
+            adopted_from_us_before: $('#adopted_from_us_before').val(),
+            current_veterinarian_name: $('#current_veterinarian_name').val(),
+            if_no_vet_name_vet_planing: $('#if_no_vet_name_vet_planning').val(),
+            saw_pet_first: $('#saw_pet_first').val()
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('.applicant-button').attr('disabled', true);
+            $('#finish-error').html(
+                '<p>Your application has been submited!</p><button onclick="location.reload();">HOME</button>'
+            );
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+            $('#finish-erro').html(
+                '<p>Sorry You must complete in form the right format'
+            );
+        });
+});
 function showInfo() {
     $('#myModal').css('display', 'block');
 }
@@ -362,7 +363,7 @@ $('#manager-login').submit(function(event) {
         type: 'POST',
         data: JSON.stringify({
             username: $('#username-input').val(),
-            password: $('#password-input').val()
+            password_hash: $('#password-input').val()
         }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json'
@@ -535,6 +536,24 @@ function NoAdoption(id) {
     console.log(this);
     $.ajax({
         url: 'http://localhost:8080/deleteApplicant/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('#manager_choice').hide(150);
+            $('#manager_choice').html('');
+            GetApplicants();
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function YesAdoption(id) {
+    console.log(this);
+    $.ajax({
+        url: 'http://localhost:8080/deleteApplicantsandPet/' + id,
         type: 'POST',
         crossDomain: true,
         contentType: 'application/json; charset=utf-8',
