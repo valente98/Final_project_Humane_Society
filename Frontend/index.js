@@ -78,6 +78,12 @@ function manager() {
     $('#foster_care').attr('hidden', true);
     $('#FosterLogin').attr('hidden', true);
 }
+function application(id) {
+    $('.modal').css('display', 'none');
+    $('#adoption').attr('hidden', true);
+    $('#application').attr('hidden', false);
+    $('#animal_id').html(id);
+}
 //*********************************************************************************************************/
 
 //**********this will show the animals and the animals info ***********************************************/
@@ -146,12 +152,6 @@ function modal2(x, user_id) {
         user_id +
         ')">NO THIS PERSON CAN NOT ADOPT</button></div> </div>';
     return html;
-}
-function application(id) {
-    $('.modal').css('display', 'none');
-    $('#adoption').attr('hidden', true);
-    $('#application').attr('hidden', false);
-    $('#animal_id').html(id);
 }
 $('#application-form').submit(function(event) {
     event.preventDefault();
@@ -352,7 +352,6 @@ function other_pets() {
             console.log(err);
         });
 }
-
 //***********************************************************************************************************/
 
 //**************this is all of the login, signup, and logout for the user and manager ***********************/
@@ -371,14 +370,13 @@ $('#manager-login').submit(function(event) {
         .then(function handleFeedResponse(response) {
             if (response) {
                 manager_page();
-            } else {
-                $('.form-group').addClass('has-danger');
-                $('#password-input').val('');
-                $('#login-error').html('Incorrect username or password');
             }
         })
         .catch(function handleErrorResponse(err) {
             console.log(err);
+            $('.form-group').addClass('has-danger');
+            $('#password-input').val('');
+            $('#foster-error').html('Incorrect username or password');
         });
 });
 function manager_logout(id) {
@@ -419,14 +417,13 @@ $('#foster-login').submit(function(event) {
                 var feed = foster_page(response);
                 $('#foster_page').html(feed);
                 FosterPage();
-            } else {
-                $('#password-input').val('');
-                $('#login-error').html('Incorrect username or password');
             }
         })
         .catch(function handleErrorResponse(err) {
             console.log(err);
             console.log('this did not work');
+            $('#password-input').val('');
+            $('#login-error').html('Incorrect username or password');
         });
 });
 $('#foster-signup').on('submit', function FosterParentSignup(event) {
@@ -437,14 +434,14 @@ $('#foster-signup').on('submit', function FosterParentSignup(event) {
         url: 'http://localhost:8080/FosterSignup',
         type: 'POST',
         data: JSON.stringify({
-            first_name: $('#first_name').val(),
-            last_name: $('#last_name').val(),
-            email: $('#email').val(),
-            city: $('#city').val(),
-            county: $('#county').val(),
-            home_address: $('#home_address').val(),
-            username: $('#username').val(),
-            password_hash: $('#password').val()
+            first_name: $('#foster_first_name').val(),
+            last_name: $('#foster_last_name').val(),
+            email: $('#foster_email').val(),
+            city: $('#foster_city').val(),
+            county: $('#foster_county').val(),
+            home_address: $('#foster_home_address').val(),
+            username: $('#foster_username').val(),
+            password_hash: $('#foster_password').val()
         }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json'
@@ -490,24 +487,25 @@ function insertAnimal() {
     $('#animal-insert').on('submit', function(event) {
         console.log(event);
         event.preventDefault();
+        var form = event.target;
         $.ajax({
             url: 'http://localhost:8080/insertAnimal',
             type: 'POST',
             data: JSON.stringify({
-                species: $('#species').val(),
-                breed: $('#breed').val(),
-                name: $('#name').val(),
-                male_female: $('#male_female').val(),
-                age_year: $('#year').val(),
-                age_month: $('#month').val(),
-                age_week: $('#week').val(),
-                size: $('#size').val(),
-                color: $('#color').val(),
-                date: $('#date').val(),
-                location: $('#location').val(),
-                houseTrained: $('#housetrained').val(),
-                declawed: $('#declawed').val(),
-                spayed_or_neutured: $('#spayed_neutured').val()
+                species: form.species.value,
+                breed: form.breed.value,
+                name: form.name.value,
+                male_female: form.male_female.value,
+                age_year: form.year.value,
+                age_month: form.month.value,
+                age_week: form.week.value,
+                size: form.size.value,
+                color: form.color.value,
+                date: form.date.value,
+                location: form.location.value,
+                houseTrained: form.housetrained.checked,
+                declawed: form.declawed.checked,
+                spayed_or_neutured: form.spayed_neutured.checked
             }),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json'
@@ -575,51 +573,51 @@ function AddAnimal() {
     addAnimal +=
         "<form id='animal-insert'><div class='col-lg-3'><p>What kind of animals is it? (dog, cat, etc.)<br>";
     addAnimal +=
-        "<input id='species' name='species' typ='text' autocomplete='off' value='' aria-required='true' placeholder='species'><p>";
+        "<input id='species' required minlength='2' name='species' typ='text' autocomplete='off' value='' aria-required='true' placeholder='species'><p>";
     addAnimal += '<p>What kind of breed is it?';
     addAnimal +=
-        "<input id='breed' name='breed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='breed'><p>";
+        "<input id='breed' required minlength='5' name='breed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='breed'><p>";
     addAnimal += '<p>What is the name of it?';
     addAnimal +=
-        "<input id='name' name='name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='name'><p>";
+        "<input id='name' required minlength='2' name='name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='name'><p>";
     addAnimal += '<p>Is the animal Male of Female?';
     addAnimal +=
-        "<input id='male_female' name='male_female' typ='text' autocomplete='off' value='' aria-required='true' placeholder='gender'><p></div>";
+        "<input id='male_female' required minlength='3' name='male_female' typ='text' autocomplete='off' value='' aria-required='true' placeholder='gender'><p></div>";
     addAnimal += "<div class='col-lg-3'>";
     addAnimal += '<p>Age of the animal';
     addAnimal +=
-        "<input id='year' name='year' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='years'>";
+        "<input id='year' required minlength='1' name='year' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='years'>";
     addAnimal +=
-        "<input id='month' name='month' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='months'>";
+        "<input id='month' required minlength='1'name='month' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='months'>";
     addAnimal +=
-        "<input id='week' name='week' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='weeks'><p>";
+        "<input id='week' required minlength='1' name='week' typ='numeric' autocomplete='off' value='' aria-required='true' placeholder='weeks'><p>";
     addAnimal +=
         '<p> what size is the animal? (small, medium, large, etc.)<br>';
     addAnimal +=
-        "<input id='size' name='size' typ='text' autocomplete='off' value='' aria-required='true' placeholder='size'><p>";
+        "<input id='size' required minlength='2' name='size' typ='text' autocomplete='off' value='' aria-required='true' placeholder='size'><p>";
     addAnimal += '<p> What is the color of the animal?';
     addAnimal +=
-        "<input id='color' name='color' typ='text' autocomplete='off' value='' aria-required='true' placeholder='color'><p></div>";
+        "<input id='color' required minlength='2' name='color' typ='text' autocomplete='off' value='' aria-required='true' placeholder='color'><p></div>";
     addAnimal +=
         "<div class='col-lg-3'><p>What is the intake date? (yyyy-mm-dd)<br>";
     addAnimal +=
-        "<input id='date' name='date' typ='text' autocomplete='off' value='' aria-required='true' placeholder='yyyy-mm-dd'><p>";
+        "<input id='date' required minlength='5' name='date' typ='text' autocomplete='off' value='' aria-required='true' placeholder='yyyy-mm-dd'><p>";
     addAnimal +=
         '<p>Where is the animal located? (Foster care, puppy cage, etc.)';
     addAnimal +=
-        "<input id='location' name='location' typ='text' autocomplete='off' value='' aria-required='true' placeholder='location'><p>";
-    addAnimal += '<p>Is the animal housetrained?';
+        "<input id='location' required minlength='5' name='location' typ='text' autocomplete='off' value='' aria-required='true' placeholder='location'><p>";
+    addAnimal += '<p>Check if true: </p>';
+    addAnimal += '<p>House Trained: ';
     addAnimal +=
-        "<input id='housetrained' name='housetrained' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'><p>";
-    addAnimal += '<p>Is the animal declawed?';
+        "<input id='housetrained' name='housetrained' type='checkbox' autocomplete='off' aria-required='true' placeholder='true or false'></p>";
+    addAnimal += '<p>Declawed: ';
     addAnimal +=
-        "<input id='declawed' name='declawed' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'><p></div>";
-    addAnimal += '<div class="col-lg-3">';
-    addAnimal += '<p>Is the animal spayed or neutured?</p>';
+        "<input id='declawed' name='declawed' type='checkbox' autocomplete='off' aria-required='true' placeholder='true or false'></p>";
+    addAnimal += '<p>spayed or neutured: ';
     addAnimal +=
-        "<input id='spayed_neutured' name='spayed_neutured' typ='text' autocomplete='off' value='' aria-required='true' placeholder='true or false'></div>";
+        "<input id='spayed_neutured' name='spayed_neutured' type='checkbox' autocomplete='off' aria-required='true' placeholder='true or false'></p></div>";
     addAnimal +=
-        "<button class='submit-button' type='submit'>add animal</button></form>";
+        "<div class='col-lg-3'><button class='submit-button' type='submit'>add animal</button></form>";
     addAnimal += "<div id='animalMessage'></div>";
     return addAnimal;
 }
