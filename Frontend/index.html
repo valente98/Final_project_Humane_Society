@@ -156,61 +156,61 @@
                     <div class="col-lg-4">
                         <p>First name:
                             <br>
-                            <input id='first_name' type='text' autocomplete='off' aria-required='true' placeholder='first name'>
+                            <input id='first_name' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='first name'>
                         </p>
                         <p>Last name:
                             <br>
-                            <input id='last_name' type='text' autocomplete='off' aria-required='true' placeholder='last name'>
+                            <input id='last_name' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='last name'>
                         </p>
                         <p>Email Address:
                             <br>
-                            <input id='email' type='text' autocomplete='off' aria-required='true' placeholder='email'>
+                            <input id='email' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='email'>
                         </p>
                         <p>Age:
                             <br>
-                            <input id="age" type="numeric" autocomplete="off" aria-required="true" placeholder="age">
+                            <input id="age" required minlength="5" type="numeric" autocomplete="off" aria-required="true" placeholder="age">
                         </p>
                         <p>City:
                             <br>
-                            <input id="city" type="numeric" autocomplete="off" aria-required="true" placeholder="City">
+                            <input id="city" required minlength="5" type="numeric" autocomplete="off" aria-required="true" placeholder="City">
                         </p>
                         <p>County:
                             <br>
-                            <input id='county' type='text' autocomplete='off' aria-required='true' placeholder='county'>
+                            <input id='county' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='county'>
                         </p>
                         <p>Home Address:
                             <br>
-                            <input id='home_address' type='text' autocomplete='off' aria-required='true' placeholder='address'>
+                            <input id='home_address' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='address'>
                         </p>
                     </div>
                     <div class="col-lg-4">
                         <p>Ownership Status (rent, own, etc.):
                             <br>
-                            <input id='ownership_status' type='text' autocomplete='off' aria-required='true' placeholder='status'>
+                            <input id='ownership_status' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='status'>
                         </p>
                         <p>Number of pets currently own:
                             <br>
-                            <input id="amount_pets_own" type='numeric' autocomplete="off" aria-required="true" placeholder="pets own">
+                            <input id="amount_pets_own" required minlength="5" type='numeric' autocomplete="off" aria-required="true" placeholder="pets own">
                         </p>
                         <p>Number of pets owned in the past:
                             <br>
-                            <input id="amount_pets_own_past" type="numeric" autocomplete="off" aria-required="true" placeholder="pets owned">
+                            <input id="amount_pets_own_past" required minlength="5" type="numeric" autocomplete="off" aria-required="true" placeholder="pets owned">
                         </p>
                         <p>Is the animal living with you?:
                             <br>
-                            <input id='animal_living_with_you' type='boolean' autocomplete='off' aria-required='true' placeholder='true or false'>
+                            <input id='animal_living_with_you' required minlength="5" type='boolean' autocomplete='off' aria-required='true' placeholder='true or false'>
                         </p>
                         <p>Inside/outside pet:
                             <br>
-                            <input id='inside_outside' type='text' autocomplete='off' aria-required='true' placeholder='inside or outside'>
+                            <input id='inside_outside' required minlength="5" type='text' autocomplete='off' aria-required='true' placeholder='inside or outside'>
                         </p>
                         <p>Kept during day:
                             <br>
-                            <input id='kept_during_day' type='text' autocomplete="off" aria-required="true" placeholder="kept during day">
+                            <input id='kept_during_day' required minlength="5" type='text' autocomplete="off" aria-required="true" placeholder="kept during day">
                         </p>
                         <p>Kept at night:
                             <br>
-                            <input id="kept_at_night" type="text" autocomplete="off" aria-required="true" placeholder="kept at night">
+                            <input id="kept_at_night" required minlength="5" type="text" autocomplete="off" aria-required="true" placeholder="kept at night">
                         </p>
                     </div>
                     <div class="col-lg-4">
@@ -286,42 +286,50 @@
                 <h1>FOSTER PARENT SIGN UP FORM</h1>
                 <hr>
                 <form id="foster-signup">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 form-group">
                         <p>First name:
                             <br>
-                            <input id='first_name' name='first_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='first name'>
+                            <input id='foster_first_name' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='first name' class="">
                         </p>
                         <p>Last name:
                             <br>
-                            <input id='last_name' name='last_name' typ='text' autocomplete='off' value='' aria-required='true' placeholder='last name'>
+                            <input id='foster_last_name' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='last name' class="">
                         </p>
                         <p>Email Address:
                             <br>
-                            <input id='email' name='email' typ='text' autocomplete='off' value='' aria-required='true' placeholder='email'>
+                            <input id='foster_email' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='email' class="">
                         </p>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 form-group">
                         <p>City:
                             <br>
-                            <input id='city' name='city' typ='text' autocomplete='off' value='' aria-required='true' placeholder='city'>
+                            <input id='foster_city' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='city' class="">
                         </p>
                         <p>County:
                             <br>
-                            <input id='county' name='county' typ='text' autocomplete='off' value='' aria-required='true' placeholder='county'>
+                            <input id='foster_county' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='county' class="">
                         </p>
                         <p>Home Address:
                             <br>
-                            <input id='home_address' name='home_address' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Address'>
+                            <input id='foster_home_address' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='Address' class="">
                         </p>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 form-group">
                         <p>Username:
                             <br>
-                            <input id='username' name='username' typ='text' autocomplete='off' value='' aria-required='true' placeholder='Username'>
+                            <input id='foster_username' required minlength="5" name="user[name]" type='text' autocomplete='off' value='' aria-required='true'
+                                placeholder='Username' class="">
                         </p>
                         <p>Password:
                             <br>
-                            <input id='password' name='password' typ='text' autocomplete='off' value='' aria-required='true' placeholder='password'>
+                            <input id='foster_password' required minlength="5" name="user[name]" type='password' autocomplete='off' value='' aria-required='true'
+                                placeholder='password' class="">
                         </p>
                         <button class="singup-button" type="submit">SIGN UP</button>
                     </div>
@@ -366,7 +374,7 @@
                             <input id="password-input" type="password" autocomplete="off" value="hslohs#21" name="user[name]" maxlength="40" aria-required="true"
                                 placeholder="Password" class="">
                         </div>
-                        <p id="login-error" class="text-danger"></p>
+                        <p id="manager-error" class="text-danger"></p>
                         <button class='manager_login' type="submit">Login</button>
                     </form>
                 </div>
