@@ -153,6 +153,57 @@ function modal2(x, user_id) {
         ')">NO THIS PERSON CAN NOT ADOPT</button></div> </div>';
     return html;
 }
+function modal3(x, user_id) {
+    var html = '<div id="myModal" class="modal">';
+    html +=
+        '<div class="modal-content"><div class="modal-header"><span class="close" onclick="closemodel()">&times;</span>';
+    html +=
+        '<h1 id="popup_name">' + x.name + '</h1></div><div class="modal-body">';
+    html += '<p>Breed: ' + x.breed + '</p>';
+    html += '<p>M/F: ' + x.male_female + '</p>';
+    html +=
+        '<p>Age: ' +
+        x.age_year +
+        ' year(s)\n\t' +
+        x.age_month +
+        ' month(s)\n\t' +
+        x.age_week +
+        ' week(s)</p>';
+    html += '<p>Size: ' + x.size + '</p>';
+    html += '<p>Color: ' + x.color + '</p>';
+    html += '<p>With us since: ' + x.intake_date + '</p>';
+    html += '<p>Location: ' + x.location + '</p>';
+    html += '<p>House Trained: ' + x.houseTrained + '</p>';
+    html += '<p>Declawed: ' + x.declawed + '</p>';
+    html += '<p>Spayed or Neutured: ' + x.spayed_or_neutured + '</p></div>';
+    html +=
+        '<div class="modal-footer"><button id="fosterAppliedButton" onclick="addFosterApproval(' +
+        x.id +
+        ', ' +
+        user_id +
+        ')">Foster</button></div><p id="fosterapplied"></p> </div>';
+    return html;
+}
+function addFosterApproval(animal_id, user_id) {
+    $.ajax({
+        url: 'http://localhost:8080/addFosterApproval',
+        type: 'POST',
+        data: JSON.stringify({
+            animal_id: animal_id,
+            user_id: user_id
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('#fosterAppliedButton').attr('disabled', true);
+            $('#fosterapplied').html('Succes you have applied for fostering');
+            FosterPage();
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
 $('#application-form').submit(function(event) {
     event.preventDefault();
     $('#animal_id').attr('hidden', false);
@@ -198,9 +249,6 @@ $('#application-form').submit(function(event) {
             );
         });
 });
-function showInfo() {
-    $('#myModal').css('display', 'block');
-}
 function closemodel() {
     $('#myModal').css('display', 'none');
 }
@@ -298,6 +346,81 @@ function show_animals(animal) {
                         })
                         .join('');
                 $('#adoption').html(cat);
+            }
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function getanimalByidFoster(id, user_id) {
+    console.log(id);
+    $.ajax({
+        url: 'http://localhost:8080/getAnimalbyId/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            var animal = response.map(function(y) {
+                return modal3(y, user_id);
+            });
+            $('#myModal').html(animal);
+            $('.modal').css('display', 'block');
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function foster_animals(x, user_id) {
+    var html =
+        '<div><p><a onclick="getanimalByidFoster(' +
+        x.id +
+        ', ' +
+        user_id +
+        ')">View</button></a>';
+    html += ' <b>Name:</b> ' + x.name + '  ';
+    html += ' <b>Breed:</b> ' + x.breed + '  ';
+    html += ' <b>Gender:</b> ' + x.male_female + '  ';
+    html += ' <b>Color:</b> ' + x.color + '  ';
+    html += '</p> <p id="userId" hidden="true">' + user_id + '</p>';
+    return html;
+}
+function show_animals_to_foster(animal, foster_id) {
+    console.log(animal);
+    console.log(foster_id);
+    $.ajax({
+        url: 'http://localhost:8080/showAnimals',
+        type: 'POST',
+        data: JSON.stringify({
+            animal
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            if (animal === 'dog') {
+                var dog =
+                    '<h1>DOGS TO FOSTER:</h1><hr><div id="foster_scroll_bar">' +
+                    response
+                        .map(function(y) {
+                            return foster_animals(y, foster_id);
+                        })
+                        .join('') +
+                    '</div>';
+                $('#foster_pet').html(dog);
+                $('#foster_pet').attr('hidden', false);
+            } else if (animal === 'cat') {
+                var cat =
+                    '<h1>CATS TO FOSTER:</h1><hr>' +
+                    response
+                        .map(function(y) {
+                            return foster_animals(y, foster_id);
+                        })
+                        .join('');
+                $('#foster_pet').html(cat);
+                $('#foster_pet').attr('hidden', false);
             }
         })
         .catch(function handleErrorResponse(err) {
@@ -476,7 +599,6 @@ function FosterParentLogout(id) {
             console.log(err);
         });
 }
-
 //***********************************************************************************************************/
 
 //**************this is all of the thing that the user or manager can do once they login ********************/
@@ -492,7 +614,7 @@ function insertAnimal() {
             url: 'http://localhost:8080/insertAnimal',
             type: 'POST',
             data: JSON.stringify({
-                species: form.species.value,
+                species: form.species.value.toLowerCase(),
                 breed: form.breed.value,
                 name: form.name.value,
                 male_female: form.male_female.value,
@@ -718,16 +840,21 @@ function foster_page(x) {
     html += '<p>' + x.home_address + '</p></div>';
     html += '<div class="col-lg-4"><h1>Foster Parenting</h1><hr>';
     html +=
-        '<p><button onclick="show_animals("dog")">Foster a dog</button></p>';
+        "<p><button onclick=\"show_animals_to_foster('dog', " +
+        x.id +
+        ')">Foster a dog</button></p>';
     html +=
-        '<p><button onclick="show_animals("cat")">Foster a cat</button></p>';
+        "<p><button onclick=\"show_animals_to_foster('cat', " +
+        x.id +
+        ')">Foster a cat</button></p>';
     html +=
-        '<p><button onclick="other_pets()">Foster other pets</button></p></div>';
-    html +=
-        '<div id="foster_pet" class="col-lg-5"><h1> hello world</h1></div></div>';
+        '<p><button onclick="other_pets(' +
+        x.id +
+        ')">Foster other pets</button></p></div>';
+    html += '<div id="foster_pet" class="col-lg-5" hidden="true"></div></div>';
     html +=
         '<div class="container"><div class="col-lg-3"><h1>Foster pet</h1><hr><p>hello world</p>';
-    html += '<button>Unfoster Pet</button></div></div';
+    html += '<button>Unfoster Pet</button></div></div>';
     return html;
 }
 //***********************************************************************************************************/
