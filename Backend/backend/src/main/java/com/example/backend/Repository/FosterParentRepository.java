@@ -83,4 +83,12 @@ public class FosterParentRepository {
         preparedStatement.setInt(1, id);
         return preparedStatement.execute();
     }
+
+    public boolean addFosterApproval(Integer animal_id, Integer user_id) throws SQLException{
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO FosterApproval (fosterid, animalId) VALUES(?, ?)");
+        preparedStatement.setInt(1, user_id);
+        preparedStatement.setInt(2, animal_id);
+        return preparedStatement.execute();
+    }
 }
