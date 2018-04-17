@@ -64,4 +64,9 @@ public class usercontroller {
     public boolean FosterLogout(@PathVariable Integer id)throws SQLException{
         return foster.FosterParent_logout(id);
     }
+
+    @CrossOrigin()
+    @PostMapping("/addFosterApproval")
+    public boolean FosterParentSignUp (@RequestBody FosterApprovalCred fosterApproval) throws SQLException{
+        return foster.addFosterApproval(fosterApproval.animal_id, fosterApproval.user_id);}
 }
