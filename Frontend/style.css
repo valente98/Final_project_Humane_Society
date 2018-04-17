@@ -67,7 +67,11 @@ button {
         opacity: 1;
     }
 }
-
+#foster_scroll_bar {
+    width: 30pc;
+    height: 15pc;
+    overflow-y: scroll;
+}
 @keyframes animatetop {
     from {
         top: -300px;
