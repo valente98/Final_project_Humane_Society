@@ -177,12 +177,60 @@ function modal3(x, user_id) {
     html += '<p>Declawed: ' + x.declawed + '</p>';
     html += '<p>Spayed or Neutured: ' + x.spayed_or_neutured + '</p></div>';
     html +=
-        '<div class="modal-footer"><button id="fosterAppliedButton" onclick="addFosterApproval(' +
+        '<div class="modal-footer"><button id="approved" onclick="FosterApproved(' +
         x.id +
         ', ' +
         user_id +
-        ')">Foster</button></div><p id="fosterapplied"></p> </div>';
+        ')">Approved</button><button id="approved" onclick="FosterDisapproved(' +
+        x.id +
+        ', ' +
+        user_id +
+        ')">Disapproved</button></div><p id="fosterapplied"></p> </div>';
     return html;
+}
+function FosterApproved(animal_id, user_id) {
+    $.ajax({
+        url: 'http://localhost:8080/FosterApproved',
+        type: 'POST',
+        data: JSON.stringify({
+            animal_id: animal_id,
+            user_id: user_id
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('#approved').attr('disabled', true);
+            $('#fosterapplied').html('Succes Foster was approved');
+            $('#manager_choice').hide(150);
+            $('#manager_choice').html('');
+            FosterPage();
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function FosterDisapproved(animal_id, user_id) {
+    $.ajax({
+        url: 'http://localhost:8080/FosterDisapproved',
+        type: 'POST',
+        data: JSON.stringify({
+            animal_id: animal_id,
+            user_id: user_id
+        }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            $('#approved').attr('disabled', true);
+            $('#fosterapplied').html('Foster was disapproved');
+            $('#manager_choice').hide(150);
+            $('#manager_choice').html('');
+            FosterPage();
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
 }
 function addFosterApproval(animal_id, user_id) {
     $.ajax({
@@ -302,6 +350,27 @@ function BoolgetanimalByid(id, user_id) {
             console.log(response);
             var animal = response.map(function(y) {
                 return modal2(y, user_id);
+            });
+            $('#myModal').html(animal);
+            $('.modal').css('display', 'block');
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function FostergetanimalByid(id, user_id) {
+    console.log(id);
+    $.ajax({
+        url: 'http://localhost:8080/getAnimalbyId/' + id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            console.log(response);
+            var animal = response.map(function(y) {
+                return modal3(y, user_id);
             });
             $('#myModal').html(animal);
             $('.modal').css('display', 'block');
@@ -856,6 +925,77 @@ function foster_page(x) {
         '<div class="container"><div class="col-lg-3"><h1>Foster pet</h1><hr><p>hello world</p>';
     html += '<button>Unfoster Pet</button></div></div>';
     return html;
+}
+function createFosterTable(response) {
+    var applicant =
+        '<div class="row"><div class="col-lg-12"><center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Foster Parents</h1><hr></div></div>';
+    applicant += '<div class="row">';
+    for (var c = 0; c < response.length; c++) {
+        console.log(response[c]);
+        if (c > 0 && c % 4 == 0) {
+            // adds row so there is not the funny overlap between the applications
+            console.log('NEW ROW');
+            applicant += '</div><div class="row">';
+        }
+        applicant +=
+            '<div class="col-lg-3" id="applicant-' +
+            response[c].user_id +
+            '-' +
+            response[c].pet_id +
+            '"></div>';
+        var html = getFosterparent(response[c].user_id, response[c].pet_id);
+    }
+    applicant += '</div>';
+    $('#manager_page').attr('hidden', true);
+    $('#manager_choice').html(applicant);
+    $('#manager_choice').show(150);
+}
+function getFosterApprovelTable() {
+    $.ajax({
+        url: 'http://localhost:8080/getFosterApproval',
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handlefeedResponse(response) {
+            createFosterTable(response);
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log(err);
+        });
+}
+function FosterParent(x, animal_id) {
+    var html = '<p>Full Name: ' + x.first_name + ' ' + x.last_name + '</p>';
+    html += '<p>Email: ' + x.email + '</p>';
+    html += '<p>City: ' + x.city + '</p>';
+    html += '<p>County: ' + x.county + '</p>';
+    html += '<p>Home Address: ' + x.home_address + '</p>';
+    html +=
+        '<button onclick="FostergetanimalByid(' +
+        animal_id +
+        ', ' +
+        x.id +
+        ')">See pet</button>';
+    return html;
+}
+function getFosterparent(user_id, pet_id) {
+    $.ajax({
+        url: 'http://localhost:8080/getFosterParents/' + user_id,
+        type: 'POST',
+        crossDomain: true,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+    })
+        .then(function handleFeedResponse(response) {
+            var html = FosterParent(response, parseInt(pet_id));
+            var id = '#applicant-' + user_id + '-' + pet_id;
+            $(id).html(html);
+        })
+        .catch(function handleErrorResponse(err) {
+            console.log('error message:');
+            console.log(err);
+        });
 }
 //***********************************************************************************************************/
 function main() {
