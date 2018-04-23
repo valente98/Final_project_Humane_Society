@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.example.backend.controllers.ManagerCred;
+import com.example.backend.controllers.UserSignupCred;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class ManagerRepository {
@@ -68,6 +69,39 @@ public class ManagerRepository {
         );
         preparedStatement.setInt(1, id);
         return preparedStatement.execute();
+    }
+
+    public ArrayList getFosterApproval() throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from FosterApproval");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        ArrayList FosterApproval = new ArrayList();
+        while (resultSet.next()) {
+            HashMap fosterandanimal = new HashMap();
+            fosterandanimal.put("user_id", resultSet.getInt("fosterid"));
+            fosterandanimal.put("pet_id", resultSet.getString("animalId"));
+            FosterApproval.add(fosterandanimal);
+        }
+        return FosterApproval;
+    }
+
+    public UserSignupCred getFosterParents(Integer id) throws SQLException {
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from foster_care Where id = ?");
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        conn.close();
+        return new UserSignupCred(resultSet.getInt("id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("email"),
+                resultSet.getString("city"),
+                resultSet.getString("county"),
+                resultSet.getString("home_address"),
+                resultSet.getString("username"),
+                resultSet.getString("password_hash"),
+                resultSet.getString("sessionKey"));
     }
     public ArrayList getapplicants() throws SQLException {
         Connection conn = JDBCConnect.getDatabase();
