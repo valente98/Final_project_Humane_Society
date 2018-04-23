@@ -32,6 +32,12 @@ public class ManagerControler {
     public ArrayList getApplicant() throws SQLException {
         return manager.getapplicants();
     }
+
+    @CrossOrigin()
+    @PostMapping("/getFosterApproval")
+    public ArrayList getFosterApproval() throws SQLException {
+        return manager.getFosterApproval();
+    }
         @CrossOrigin()
     @PostMapping("/insertApplicant")
     public Boolean insert_applicant(@RequestBody ApplicationCred applicant) throws SQLException {
@@ -61,6 +67,11 @@ public class ManagerControler {
         return  manager.Delete_Applicant_with_Same_adopting_pet(id);
     }
 
+    @CrossOrigin()
+    @PostMapping("/getFosterParents/{id}")
+    public UserSignupCred getFosterParents(@PathVariable Integer id) throws SQLException{
+        return manager.getFosterParents(id);
+    }
     @CrossOrigin()
     @PostMapping("/managerLogOut/{id}")
     public boolean managerLogOut(@PathVariable Integer id)throws SQLException{
