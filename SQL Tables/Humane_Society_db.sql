@@ -25,8 +25,6 @@ CREATE TABLE manager(
     email text,
     sessionKey text
 );
-INSERT INTO manager(first_name, last_name, username, password_hash, email) 
-values('Valente','Alvarez', 'valvarez12', '$2a$10$n8bYXVib6.SmjQPJRazwk.IGILPXEa1BoZN3z.XkSXxEgJbuZ5f2i', 'valvarez@basecampcodingacademy.org');
 
 CREATE TABLE foster_care(
     id Serial Primary key,
@@ -42,13 +40,18 @@ CREATE TABLE foster_care(
     sessionKey text
 );
 
+Create Table FosterApproval(
+    fosterid Integer REFERENCES foster_care(id),
+    animalId Integer REFERENCES animals(id)
+);
+
 CREATE TABLE application(
     id Serial Primary key,
     first_name text,
     last_name text,
     age numeric,
     email text,
-    animal_adopting_id integer REFERENCES animals(id),
+    animal_adopting_id integer REFERENCES animals(id) ON DELETE CASCADE,
     city text,
     county text,
     home_address text,
