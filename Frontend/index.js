@@ -66,6 +66,7 @@ function manager_page() {
     $('#manager_id').attr('hidden', true);
     $('#manager_choice').attr('hidden', true);
     $('#manager_page').attr('hidden', false);
+    $('#manager_choice').html('');
 }
 function manager() {
     $('#home').attr('hidden', true);
@@ -188,6 +189,37 @@ function modal3(x, user_id) {
         ')">Disapproved</button></div><p id="fosterapplied"></p> </div>';
     return html;
 }
+function modal4(x, user_id) {
+    var html = '<div id="myModal" class="modal">';
+    html +=
+        '<div class="modal-content"><div class="modal-header"><span class="close" onclick="closemodel()">&times;</span>';
+    html +=
+        '<h1 id="popup_name">' + x.name + '</h1></div><div class="modal-body">';
+    html += '<p>Breed: ' + x.breed + '</p>';
+    html += '<p>M/F: ' + x.male_female + '</p>';
+    html +=
+        '<p>Age: ' +
+        x.age_year +
+        ' year(s)\n\t' +
+        x.age_month +
+        ' month(s)\n\t' +
+        x.age_week +
+        ' week(s)</p>';
+    html += '<p>Size: ' + x.size + '</p>';
+    html += '<p>Color: ' + x.color + '</p>';
+    html += '<p>With us since: ' + x.intake_date + '</p>';
+    html += '<p>Location: ' + x.location + '</p>';
+    html += '<p>House Trained: ' + x.houseTrained + '</p>';
+    html += '<p>Declawed: ' + x.declawed + '</p>';
+    html += '<p>Spayed or Neutured: ' + x.spayed_or_neutured + '</p></div>';
+    html +=
+        '<div class="modal-footer"><button id="approved" onclick="addFosterApproval(' +
+        x.id +
+        ', ' +
+        user_id +
+        ')">Foster</button></div><p id="fosterapplied"></p> </div>';
+    return html;
+}
 function FosterApproved(animal_id, user_id) {
     $.ajax({
         url: 'http://localhost:8080/FosterApproved',
@@ -204,29 +236,26 @@ function FosterApproved(animal_id, user_id) {
             $('#fosterapplied').html('Succes Foster was approved');
             $('#manager_choice').hide(150);
             $('#manager_choice').html('');
-            FosterPage();
+            getFosterApprovelTable();
         })
         .catch(function handleErrorResponse(err) {
             console.log(err);
         });
 }
 function FosterDisapproved(animal_id, user_id) {
+    console.log(animal_id);
     $.ajax({
-        url: 'http://localhost:8080/FosterDisapproved',
+        url: 'http://localhost:8080/FosterDisapproved/' + user_id,
         type: 'POST',
-        data: JSON.stringify({
-            animal_id: animal_id,
-            user_id: user_id
-        }),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json'
     })
         .then(function handleFeedResponse(response) {
             $('#approved').attr('disabled', true);
-            $('#fosterapplied').html('Foster was disapproved');
+            $('#fosterapplied').html('Foster was Disapproved');
             $('#manager_choice').hide(150);
             $('#manager_choice').html('');
-            FosterPage();
+            getFosterApprovelTable();
         })
         .catch(function handleErrorResponse(err) {
             console.log(err);
@@ -244,7 +273,6 @@ function addFosterApproval(animal_id, user_id) {
         dataType: 'json'
     })
         .then(function handleFeedResponse(response) {
-            $('#fosterAppliedButton').attr('disabled', true);
             $('#fosterapplied').html('Succes you have applied for fostering');
             FosterPage();
         })
@@ -433,7 +461,7 @@ function getanimalByidFoster(id, user_id) {
         .then(function handleFeedResponse(response) {
             console.log(response);
             var animal = response.map(function(y) {
-                return modal3(y, user_id);
+                return modal4(y, user_id);
             });
             $('#myModal').html(animal);
             $('.modal').css('display', 'block');
@@ -448,7 +476,7 @@ function foster_animals(x, user_id) {
         x.id +
         ', ' +
         user_id +
-        ')">View</button></a>';
+        ')">View</a>';
     html += ' <b>Name:</b> ' + x.name + '  ';
     html += ' <b>Breed:</b> ' + x.breed + '  ';
     html += ' <b>Gender:</b> ' + x.male_female + '  ';
@@ -572,7 +600,6 @@ $('#manager-login').submit(function(event) {
         });
 });
 function manager_logout(id) {
-    console.log(id);
     $.ajax({
         url: 'http://localhost:8080/managerLogOut/' + id,
         type: 'POST',
@@ -759,7 +786,7 @@ function YesAdoption(id) {
 }
 function AddAnimal() {
     var addAnimal =
-        "<center><img src='./images/logo.jpg' width='425' length='425'/></center>";
+        "<button onclick='manager_page()'><i class='fa fa-chevron-circle-left' aria-hidden='true'></i> Back </button><center><img src='./images/logo.jpg' width='425' length='425'/></center>";
     addAnimal += "<div class='container'> <h1>ADD ANIMAL</h1><hr>";
     addAnimal +=
         "<form id='animal-insert'><div class='col-lg-3'><p>What kind of animals is it? (dog, cat, etc.)<br>";
@@ -871,7 +898,7 @@ function GetApplicants() {
             //         })
             //         .join('');
             var applicant =
-                '<div class="row"><div class="col-lg-12"><center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Applicants</h1><hr></div></div>';
+                '<div class="row"><div class="col-lg-12"><button onclick="manager_page()"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back </button><center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Applicants</h1><hr></div></div>';
             applicant += '<div class="row">';
             for (var c = 0; c < response.length; c++) {
                 if (c > 0 && c % 4 == 0) {
@@ -921,14 +948,11 @@ function foster_page(x) {
         x.id +
         ')">Foster other pets</button></p></div>';
     html += '<div id="foster_pet" class="col-lg-5" hidden="true"></div></div>';
-    html +=
-        '<div class="container"><div class="col-lg-3"><h1>Foster pet</h1><hr><p>hello world</p>';
-    html += '<button>Unfoster Pet</button></div></div>';
     return html;
 }
 function createFosterTable(response) {
     var applicant =
-        '<div class="row"><div class="col-lg-12"><center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Foster Parents</h1><hr></div></div>';
+        '<div class="row"><div class="col-lg-12"><button onclick="manager_page()"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Back </button><center><img src="./images/logo.jpg" width="425" length="425"/></center><h1>Foster Parents</h1><hr></div></div>';
     applicant += '<div class="row">';
     for (var c = 0; c < response.length; c++) {
         console.log(response[c]);
@@ -971,6 +995,7 @@ function FosterParent(x, animal_id) {
     html += '<p>City: ' + x.city + '</p>';
     html += '<p>County: ' + x.county + '</p>';
     html += '<p>Home Address: ' + x.home_address + '</p>';
+    html += '<p>Animal Fostering: ' + x.animal_fostering;
     html +=
         '<button onclick="FostergetanimalByid(' +
         animal_id +
