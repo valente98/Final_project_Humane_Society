@@ -32,7 +32,16 @@ public class ManagerControler {
     public ArrayList getApplicant() throws SQLException {
         return manager.getapplicants();
     }
-
+    @CrossOrigin()
+    @PostMapping("/FosterApproved")
+    public boolean FosterApproved(@RequestBody FosterApprovalCred foster) throws SQLException{
+        return manager.Fosterapproved(foster.user_id, foster.animal_id);
+    }
+    @CrossOrigin()
+    @PostMapping("/FosterDisapproved/{id}")
+    public boolean FosterDisapproved(@PathVariable Integer id) throws SQLException{
+        return manager.FosterDisapproved(id);
+    }
     @CrossOrigin()
     @PostMapping("/getFosterApproval")
     public ArrayList getFosterApproval() throws SQLException {
