@@ -1,5 +1,6 @@
 package com.example.backend.Repository;
 
+import com.example.backend.controllers.FosterCred;
 import com.example.backend.controllers.UserSignupCred;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -54,7 +55,7 @@ public class FosterParentRepository {
         }
     }
 
-    public UserSignupCred FosterParent_login(String username, String password, String sessionKey) throws SQLException{
+    public FosterCred FosterParent_login(String username, String password, String sessionKey) throws SQLException{
             Connection conn = JDBCConnect.getDatabase();
             PreparedStatement preparedStatement = conn.prepareStatement("UPDATE foster_care SET sessionKey = ? WHERE username = ? and password_hash = ? returning *");
             preparedStatement.setString(1, sessionKey);
@@ -63,7 +64,7 @@ public class FosterParentRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             conn.close();
-            return new UserSignupCred(resultSet.getInt("id"),
+            return new FosterCred(resultSet.getInt("id"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
                 resultSet.getString("email"),
@@ -72,6 +73,7 @@ public class FosterParentRepository {
                 resultSet.getString("home_address"),
                 resultSet.getString("username"),
                 resultSet.getString("password_hash"),
+                resultSet.getInt("animal_fostering"),
                 resultSet.getString("sessionKey"));
     }
 
