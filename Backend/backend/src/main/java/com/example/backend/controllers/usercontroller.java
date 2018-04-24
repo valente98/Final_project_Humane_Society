@@ -54,7 +54,7 @@ public class usercontroller {
 
     @CrossOrigin()
     @PostMapping("/FosterLogin")
-    public UserSignupCred FosterLogin (@RequestBody UserLoginCred user) throws SQLException{
+    public FosterCred FosterLogin (@RequestBody UserLoginCred user) throws SQLException{
         String sessionKey = CreateSessionKey();
         return foster.FosterParent_login(user.username, user.password_hash, sessionKey);
     }
