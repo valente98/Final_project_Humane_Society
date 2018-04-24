@@ -45,6 +45,25 @@ public class ManagerRepository {
         preparedStatement.setInt(1, id);
         return preparedStatement.execute();
     }
+    public boolean Fosterapproved(Integer user_id, Integer Animal_id) throws SQLException{
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement1 = conn.prepareStatement("UPDATE foster_care SET animal_fostering = ? WHERE id = ? and animal_fostering = null RETURNING *");
+        PreparedStatement preparedStatement2 = conn.prepareStatement("DELETE FROM FosterApproval Where animalid = ?");
+        preparedStatement1.setInt(1, Animal_id);
+        preparedStatement1.setInt(2, user_id);
+        preparedStatement2.setInt(1, Animal_id);
+        preparedStatement2.execute();
+        return preparedStatement1.execute();
+    }
+    public boolean FosterDisapproved(Integer user_id) throws SQLException{
+        Connection conn = JDBCConnect.getDatabase();
+        PreparedStatement preparedStatement = conn.prepareStatement("Delete from FosterApproval Where fosterid =?");
+        PreparedStatement preparedStatement1 = conn.prepareStatement("Delete from foster_care where id = ?");
+        preparedStatement.setInt(1, user_id);
+        preparedStatement1.setInt(1, user_id);
+        preparedStatement.execute();
+        return preparedStatement1.execute();
+    }
     public boolean Delete_application(Integer id) throws SQLException {
         Connection conn = JDBCConnect.getDatabase();
         PreparedStatement preparedStatement = conn.prepareStatement(
